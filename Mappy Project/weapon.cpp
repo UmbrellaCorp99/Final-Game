@@ -3,7 +3,7 @@
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
 	live = false;
-	speed = 10;
+	speed = 15;
 }
 
 weapon::~weapon() {
@@ -28,6 +28,10 @@ void weapon::fireWeapon(Sprite &player) {
 		case 1:
 			x = player.getX() + player.getWidth();
 			y = player.getY() + (player.getHeight() / 2);
+			break;
+		case 2:
+			x = player.getX() + (player.getWidth() / 2);
+			y = player.getY() + player.getHeight();
 			break;
 		case 3:
 			x = player.getX() + (player.getWidth() / 2);
@@ -55,6 +59,11 @@ void weapon::updateWeapon(int width, int height) {
 		case 1:
 			x += speed;
 			if (x > width)
+				live = false;
+			break;
+		case 2:
+			y += speed;
+			if (y > height)
 				live = false;
 			break;
 		case 3:

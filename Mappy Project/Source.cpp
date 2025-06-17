@@ -1,6 +1,9 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_native_dialog.h>
 #include "SpriteSheet.h"
 #include "EnemySprite.h"
 #include "weapon.h"
@@ -29,6 +32,7 @@ int main(void)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer;
+	ALLEGRO_SAMPLE* sample = NULL;
 
 	//program init
 	if(!al_init())										//initialize Allegro
@@ -38,6 +42,21 @@ int main(void)
 
 	if(!display)										//test display object
 		return -1;
+
+	al_install_audio();
+	if (!al_install_audio) {
+		al_show_native_message_box(NULL, "Error", "Audio failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
+		return -1;
+	}
+	al_init_acodec_addon();
+	if (!al_init_acodec_addon()) {
+		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
+		return -1;
+	}
+	if (!al_reserve_samples(1)) {
+		exit(9);
+	}
+	sample = al_load_sample("07 - The Palace Of Insane.wav");
 
 	//addon init
 	al_install_keyboard();
@@ -61,6 +80,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	al_start_timer(timer);
+	al_play_sample(sample, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	//draw the background tiles
 	MapDrawBG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1);
 
@@ -179,7 +199,7 @@ int main(void)
 	MapFreeMem();
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
-
+	al_destroy_sample(sample);
 	return 0;
 }
 
