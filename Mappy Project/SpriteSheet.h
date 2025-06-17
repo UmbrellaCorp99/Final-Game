@@ -22,6 +22,7 @@ public:
 	float getY() {return y;}
 	int getWidth() {return frameWidth;}
 	int getHeight() {return frameHeight;}
+	int getDir() { return animationDirection; }
 	bool CollisionEndBlock();
 
 private:

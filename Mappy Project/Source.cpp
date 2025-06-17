@@ -3,6 +3,7 @@
 #include <allegro5/allegro_primitives.h>
 #include "SpriteSheet.h"
 #include "EnemySprite.h"
+#include "weapon.h"
 #include "mappy_A5.h"
 #include <iostream>
 using namespace std;
@@ -21,7 +22,7 @@ int main(void)
 	//Player Variable
 	Sprite player;
 	Enemy enemy;
-
+	weapon bullet;
 
 
 	//allegro variable
@@ -86,6 +87,7 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
 				cout<<"Hit an End Block\n";
+			bullet.updateWeapon(WIDTH, HEIGHT);
 			enemy.UpdateSprites(WIDTH, HEIGHT, player);
 			render = true;
 
@@ -115,6 +117,7 @@ int main(void)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = true;
+				bullet.fireWeapon(player);
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
@@ -166,6 +169,7 @@ int main(void)
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
 			enemy.DrawSprites(xOff, yOff);
 			player.DrawSprites(xOff, yOff);
+			bullet.drawWeapon(xOff, yOff);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 		}
