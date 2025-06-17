@@ -4,6 +4,8 @@ weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
 	live = false;
 	speed = 15;
+	boundx = al_get_bitmap_width(image);
+	boundy = al_get_bitmap_height(image);
 }
 
 weapon::~weapon() {
@@ -12,7 +14,24 @@ weapon::~weapon() {
 
 void weapon::drawWeapon(int xoffset, int yoffset) {
 	if (live) {
-		al_draw_bitmap(image,x-xoffset, y-yoffset,0);
+		switch (dir) {
+		case 0:
+			al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x - xoffset, y - yoffset, 0, 0);
+			break;
+
+		case 1:
+			al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x - xoffset, y - yoffset, 3.14, 0);
+			break;
+		case 2:
+			al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x - xoffset, y - yoffset, -1.57, 0);
+			break;
+		case 3:
+			al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x - xoffset, y - yoffset, -1.57, 0);
+			break;
+		case 4:
+			al_draw_rotated_bitmap(image, boundx / 2, boundy / 2, x - xoffset, y - yoffset, 1.57, 0);
+
+		}
 	}
 }
 
@@ -53,33 +72,42 @@ void weapon::updateWeapon(int width, int height) {
 		switch (dir) {
 		case 0:
 			x -= speed;
-			if (x < 0)
+			if (x < 0 || collided(x, y+boundy/2))
 				live = false;
 			break;
 		case 1:
 			x += speed;
-			if (x > width)
+			if (x > 1600 || collided(x + boundx, y+boundy/2))
 				live = false;
 			break;
 		case 2:
 			y += speed;
-			if (y > height)
+			if (y > height || collided(x+boundx/2, y))
 				live = false;
 			break;
 		case 3:
 			y -= speed;
-			if (y < 0)
+			if (y < 0 || collided(x+boundx/2, y))
 				live = false;
 			break;
 		case 4:
 			y += speed;
-			if (y > height)
+			if (y + boundy > height || collided(x + boundx/2, y + boundy))
 				live = false;
 			break;
 		}
 	}
 }
 
-void weapon::collideWeapon() {
-
+void weapon::collideWeapon(Enemy &e) {
+	if (live) {
+		if (x > (e.getX() - e.getWidth()) &&
+			x < (e.getX() + e.getWidth()) &&
+			y >(e.getY() - e.getHeight()) &&
+			y < (e.getY() + e.getHeight()))
+		{
+			live = false;
+			e.setLive(false);
+		}
+	}
 }

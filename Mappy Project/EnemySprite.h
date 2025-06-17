@@ -1,3 +1,5 @@
+#ifndef ENEMYH
+#define ENEMYH
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
@@ -21,7 +23,7 @@ public:
 	int getWidth() { return frameWidth; }
 	int getHeight() { return frameHeight; }
 	bool CollisionEndBlock();
-
+	void setLive(bool b) { live = b; }
 private:
 	float x;
 	float y;
@@ -38,4 +40,5 @@ private:
 
 	ALLEGRO_BITMAP* image;
 };
+#endif
 

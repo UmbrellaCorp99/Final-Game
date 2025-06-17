@@ -111,6 +111,7 @@ int main(void)
 				cout<<"Hit an End Block\n";
 			bullet.updateWeapon(WIDTH, HEIGHT);
 			enemy.UpdateSprites(WIDTH, HEIGHT, player);
+			bullet.collideWeapon(enemy);
 			render = true;
 
 		}

@@ -2,16 +2,19 @@
 #define WEAPONH
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include "EnemySprite.h"
 #include "SpriteSheet.h"
 class weapon
 {
+	friend int collided(int x, int y);
+	friend bool endValue(int x, int y);
 public:
 	weapon();
 	~weapon();
 	void drawWeapon(int xoffset, int yoffset);
 	void updateWeapon(int width, int height);
 	void fireWeapon(Sprite &player);
-	void collideWeapon();
+	void collideWeapon(Enemy &e);
 private:
 	float x;
 	float y;
