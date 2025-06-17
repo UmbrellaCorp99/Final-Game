@@ -28,87 +28,125 @@ void Enemy::InitSprites(int width, int height)
 	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 }
 
-void Enemy::UpdateSprites(int width, int height, int dir)
+void Enemy::UpdateSprites(int width, int height, Sprite &player)
 {
 	int oldx = x;
 	int oldy = y;
 
-	if (dir == 1) { //right key
+	if (x < player.getX()) { //right
 		animationDirection = 1;
-		animationRows = 2;
-		x += 2;
+		animationRows = 6;
+		x += 1;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
-			if (++curFrame > 26)
-				curFrame = 24;
+			if (++curFrame > 74)
+				curFrame = 72;
 		}
 	}
-	else if (dir == 0) { //left key
-		animationDirection = 0;
-		animationRows = 1;
-		x -= 2;
+	else if (x > player.getX()) { //left
+		animationDirection = 2;
+		animationRows = 5;
+		x -= 1;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
-			if (++curFrame > 14)
-				curFrame = 12;
+			if (++curFrame > 62)
+				curFrame = 60;
 		}
 	}
-	else if (dir == 3) {	//up key
+	if (y < player.getY()) { //down
 		animationDirection = 3;
-		animationRows = 3;
-		y -= 2;
+		animationRows = 4;
+		y += 1;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
-			if (++curFrame > 38)
-				curFrame = 36;
+			if (++curFrame > 50)
+				curFrame = 48;
 		}
 	}
-	else if (dir == 4) {	//down key
-		animationDirection = 3;
-		animationRows = 0;
-		y += 2;
+	else if (y > player.getY()) { //up
+		animationDirection = 4;
+		animationRows = 7;
+		y -= 1;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
-			if (++curFrame > 2)
-				curFrame = 0;
+			if (++curFrame > 74)
+				curFrame = 72;
 		}
 	}
-	else {
-		animationDirection = dir;
-	}
-
+	
 	//check for collided with foreground tiles
-	if (animationDirection == 0)
+	if (animationDirection == 2)
 	{
 		if (collided(x, y + frameHeight)) { //collision detection to the left
-			x = oldx;
-			y = oldy;
+			if (y < player.getY()) {
+				x = oldx;
+				y += 1;
+			}
+			else if (y > player.getY()) {
+				x = oldx;
+				y -= 1;;
+			}
+			else {
+				x = oldx;
+				y = oldy;
+			}
 		}
 
 	}
 	else if (animationDirection == 1)
 	{
 		if (collided(x + frameWidth, y + frameHeight)) { //collision detection to the right
-			x = oldx;
-			y = oldy;
-		}
-	}
-	else if (animationDirection == 3)
-	{
-		if (collided(x + frameWidth/2, y)) { //collision detection to up
-			x = oldx;
-			y = oldy;
+			if (y < player.getY()) {
+				x = oldx;
+				y += 1;
+			}
+			else if (y > player.getY()) {
+				x = oldx;
+				y -= 1;;
+			}
+			else {
+				x = oldx;
+				y = oldy;
+			}
 		}
 	}
 	else if (animationDirection == 4)
 	{
+		if (collided(x + frameWidth/2, y)) { //collision detection to up
+			if (x < player.getX()) {
+				x += 1;
+				y = oldy;
+			}
+			else if (x > player.getX()) {
+				x -= 1;
+				y = oldy;
+			}
+			else {
+				x = oldx;
+				y = oldy;
+			}
+			
+		}
+	}
+	else if (animationDirection == 3)
+	{
 		if (collided(x + frameWidth/2, y +frameHeight)) { //collision detection to down
-			x = oldx;
-			y = oldy;
+			if (x < player.getX()) {
+				x += 1;
+				y = oldy;
+			}
+			else if (x > player.getX()) {
+				x -= 1;
+				y = oldy;
+			}
+			else {
+				x = oldx;
+				y = oldy;
+			}
 		}
 	}
 }
@@ -118,19 +156,5 @@ void Enemy::DrawSprites(int xoffset, int yoffset)
 	int fx = (curFrame % animationColumns) * frameWidth;
 	int fy = animationRows * frameHeight;
 
-	if (animationDirection == 1) {
-		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
-	}
-	else if (animationDirection == 0) {
-		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
-	}
-	else if (animationDirection == 2) {
-		al_draw_bitmap_region(image, 32, 128, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
-	}
-	else if (animationDirection == 3) {
-		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
-	}
-	else if (animationDirection == 3) {
-		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
-	}
+	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 }

@@ -86,7 +86,7 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
 				cout<<"Hit an End Block\n";
-			enemy.UpdateSprites(WIDTH, HEIGHT, 2);
+			enemy.UpdateSprites(WIDTH, HEIGHT, player);
 			render = true;
 
 		}
