@@ -77,7 +77,7 @@ void weapon::updateWeapon(int width, int height) {
 			break;
 		case 1:
 			x += speed;
-			if (x > 1600 || collided(x + boundx, y+boundy/2))
+			if (x > width || collided(x + boundx, y+boundy/2))
 				live = false;
 			break;
 		case 2:

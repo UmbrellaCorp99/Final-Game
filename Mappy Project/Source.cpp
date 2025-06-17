@@ -109,7 +109,7 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
 				cout<<"Hit an End Block\n";
-			bullet.updateWeapon(WIDTH, HEIGHT);
+			bullet.updateWeapon(mapwidth*32, mapheight*32);
 			enemy.UpdateSprites(WIDTH, HEIGHT, player);
 			bullet.collideWeapon(enemy);
 			render = true;
