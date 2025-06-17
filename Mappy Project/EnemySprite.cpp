@@ -3,6 +3,7 @@
 Enemy::Enemy()
 {
 	image = al_load_bitmap("player.png");
+	injured = al_load_sample("05 PC-Voice (S.E. Collection).wav");
 	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
 	maxFrame = 3;
@@ -19,6 +20,7 @@ Enemy::Enemy()
 Enemy::~Enemy()
 {
 	al_destroy_bitmap(image);
+	al_destroy_sample(injured);
 }
 void Enemy::InitSprites(int width, int height)
 {
@@ -92,4 +94,18 @@ void Enemy::DrawSprites(int xoffset, int yoffset)
 		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 	}
 	
+}
+
+void Enemy::CollideSprite(Sprite &p) {
+	if (live) {
+		if (x > (p.getX() - p.getWidth()) &&
+			x < (p.getX() + p.getWidth()) &&
+			y >(p.getY() - p.getHeight()) &&
+			y < (p.getY() + p.getHeight())) 
+		{
+			p.removeLife();
+			al_play_sample(injured, 1.4, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+			live = false;
+		}
+	}
 }

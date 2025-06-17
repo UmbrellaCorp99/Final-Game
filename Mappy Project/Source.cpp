@@ -51,7 +51,7 @@ int main(void)
 		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	if (!al_reserve_samples(7)) {
+	if (!al_reserve_samples(12)) {
 		exit(9);
 	}
 	sample = al_load_sample("07 - The Palace Of Insane.wav");
@@ -120,7 +120,9 @@ int main(void)
 			}
 			for (int i = 0; i < numBullets; i++) {
 				bullet[i].collideWeapon(enemy, numEnemies);
-
+			}
+			for (int i = 0; i < numEnemies; i++) {
+				enemy[i].CollideSprite(player);
 			}
 			render = true;
 
@@ -212,6 +214,9 @@ int main(void)
 			}
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
+			if (player.getLives() == 0) {
+				done = true;
+			}
 		}
 	}
 	MapFreeMem();

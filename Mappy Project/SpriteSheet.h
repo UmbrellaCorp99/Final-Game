@@ -3,8 +3,6 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
 #include <iostream>
 using namespace std;
 class Sprite
@@ -24,10 +22,13 @@ public:
 	int getHeight() {return frameHeight;}
 	int getDir() { return animationDirection; }
 	bool CollisionEndBlock();
+	void removeLife() { lives--; }
+	int getLives() { return lives; }
 
 private:
 	float x;
 	float y;
+	int lives;
 	int maxFrame;
 	int curFrame;
 	int frameCount;
@@ -39,6 +40,5 @@ private:
 	int animationDirection;
 
 	ALLEGRO_BITMAP *image;
-	ALLEGRO_SAMPLE *walk;
 };
 #endif

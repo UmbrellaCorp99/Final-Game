@@ -5,12 +5,11 @@
 Sprite::Sprite()
 {
 	image=NULL;
-	walk = al_load_sample("04 PC-Walk (S.E. Collection).wav");
+	lives = 5;
 }
 Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
-	al_destroy_sample(walk);
 }
 void Sprite::InitSprites(int width, int height)
 {

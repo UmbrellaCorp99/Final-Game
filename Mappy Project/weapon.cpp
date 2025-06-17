@@ -11,6 +11,7 @@ weapon::weapon() {
 
 weapon::~weapon() {
 	al_destroy_bitmap(image);
+	al_destroy_sample(shot);
 }
 
 void weapon::drawWeapon(int xoffset, int yoffset) {
