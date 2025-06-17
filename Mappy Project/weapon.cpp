@@ -110,6 +110,7 @@ void weapon::collideWeapon(Enemy e[], int csize) {
 				{
 					live = false;
 					e[i].setLive(false);
+					break;
 				}
 			}
 		}
