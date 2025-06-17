@@ -22,7 +22,7 @@ int main(void)
 	//Player Variable
 	Sprite player;
 	Enemy enemy;
-	weapon bullet;
+	
 
 
 	//allegro variable
@@ -42,8 +42,10 @@ int main(void)
 	//addon init
 	al_install_keyboard();
 	al_init_image_addon();
+	al_init_image_addon();
 	al_init_primitives_addon();
 
+	weapon bullet;
 	player.InitSprites(WIDTH,HEIGHT);
 	enemy.InitSprites(WIDTH, HEIGHT);
 

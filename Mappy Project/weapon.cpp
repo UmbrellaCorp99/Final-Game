@@ -3,7 +3,7 @@
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
 	live = false;
-	speed = 2;
+	speed = 10;
 }
 
 weapon::~weapon() {
