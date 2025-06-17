@@ -99,15 +99,20 @@ void weapon::updateWeapon(int width, int height) {
 	}
 }
 
-void weapon::collideWeapon(Enemy &e) {
+void weapon::collideWeapon(Enemy e[], int csize) {
 	if (live) {
-		if (x > (e.getX() - e.getWidth()) &&
-			x < (e.getX() + e.getWidth()) &&
-			y >(e.getY() - e.getHeight()) &&
-			y < (e.getY() + e.getHeight()))
-		{
-			live = false;
-			e.setLive(false);
+		for (int i = 0; i < csize; i++) {
+			if (e[i].getlive()) {
+				if (x > (e[i].getX() - e[i].getWidth()) &&
+					x < (e[i].getX() + e[i].getWidth()) &&
+					y >(e[i].getY() - e[i].getHeight()) &&
+					y < (e[i].getY() + e[i].getHeight()))
+				{
+					live = false;
+					e[i].setLive(false);
+				}
+			}
 		}
+		
 	}
 }

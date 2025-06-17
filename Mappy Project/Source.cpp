@@ -23,11 +23,9 @@ int main(void)
 	bool done = false;
 	bool render = false;
 	//Player Variable
-	Sprite player;
-	Enemy enemy;
-	
-
-
+	const int numEnemies = 10;
+	const int numBullets = 5;
+	srand(time(NULL));
 	//allegro variable
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -64,10 +62,12 @@ int main(void)
 	al_init_image_addon();
 	al_init_primitives_addon();
 
-	weapon bullet;
-	player.InitSprites(WIDTH,HEIGHT);
-	enemy.InitSprites(WIDTH, HEIGHT);
+	Sprite player;
+	Enemy enemy[numEnemies];
+	weapon bullet[numBullets];
 
+	player.InitSprites(WIDTH,HEIGHT);
+	
 	int xOff = 0;
 	int yOff = 0;
 	if(MapLoad("FinalProjectMap1.FMP", 1))
@@ -87,7 +87,6 @@ int main(void)
 	//draw foreground tiles
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
 	player.DrawSprites(0,0);
-	enemy.DrawSprites(0,0);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
 	while(!done)
@@ -109,9 +108,20 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
 				cout<<"Hit an End Block\n";
-			bullet.updateWeapon(mapwidth*32, mapheight*32);
-			enemy.UpdateSprites(WIDTH, HEIGHT, player);
-			bullet.collideWeapon(enemy);
+			for (int i = 0; i < numBullets; i++) {
+				bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
+
+			}
+			for (int i = 0; i < numEnemies; i++) {
+				enemy[i].InitSprites(mapwidth*32, mapheight*32);
+			}
+			for (int i = 0; i < numEnemies; i++) {
+				enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
+			}
+			for (int i = 0; i < numBullets; i++) {
+				bullet[i].collideWeapon(enemy, numEnemies);
+
+			}
 			render = true;
 
 		}
@@ -140,7 +150,9 @@ int main(void)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = true;
-				bullet.fireWeapon(player);
+				for (int i = 0; i < numBullets; i++) {
+					bullet[i].fireWeapon(player);
+				}
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
@@ -190,9 +202,14 @@ int main(void)
 
 			//draw foreground tiles
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
-			enemy.DrawSprites(xOff, yOff);
+			for (int i = 0; i < numEnemies; i++) {
+				enemy[i].DrawSprites(xOff, yOff);
+			}
 			player.DrawSprites(xOff, yOff);
-			bullet.drawWeapon(xOff, yOff);
+			for (int i = 0; i < numBullets; i++) {
+				bullet[i].drawWeapon(xOff, yOff);
+
+			}
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 		}

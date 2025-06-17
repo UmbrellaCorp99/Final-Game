@@ -2,17 +2,8 @@
 
 Enemy::Enemy()
 {
-	image = NULL;
-}
-Enemy::~Enemy()
-{
-	al_destroy_bitmap(image);
-}
-void Enemy::InitSprites(int width, int height)
-{
-	x = 240;
-	y = 160;
-
+	image = al_load_bitmap("player.png");
+	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
 	maxFrame = 3;
 	curFrame = 48;
@@ -23,9 +14,20 @@ void Enemy::InitSprites(int width, int height)
 	animationColumns = 3;
 	animationRows = 8;
 	animationDirection = 1;
+	live = false;
+}
+Enemy::~Enemy()
+{
+	al_destroy_bitmap(image);
+}
+void Enemy::InitSprites(int width, int height)
+{
+	if (!live) {
+		x = (rand() % width);
+		y = (rand() % width);
 
-	image = al_load_bitmap("player.png");
-	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
+		live = true;
+	}
 }
 
 void Enemy::UpdateSprites(int width, int height, Sprite &player)

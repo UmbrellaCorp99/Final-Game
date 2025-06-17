@@ -24,6 +24,7 @@ public:
 	int getHeight() { return frameHeight; }
 	bool CollisionEndBlock();
 	void setLive(bool b) { live = b; }
+	bool getlive() { return live; }
 private:
 	float x;
 	float y;
