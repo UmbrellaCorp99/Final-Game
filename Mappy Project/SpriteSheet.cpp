@@ -1,12 +1,16 @@
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "SpriteSheet.h"
 
 Sprite::Sprite()
 {
 	image=NULL;
+	walk = al_load_sample("04 PC-Walk (S.E. Collection).wav");
 }
 Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
+	al_destroy_sample(walk);
 }
 void Sprite::InitSprites(int width, int height)
 {

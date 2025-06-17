@@ -2,6 +2,7 @@
 
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
+	shot = al_load_sample("02 Arms (S.E. Collection).wav");
 	live = false;
 	speed = 15;
 	boundx = al_get_bitmap_width(image);
@@ -61,7 +62,7 @@ void weapon::fireWeapon(Sprite &player) {
 			y = player.getY() + player.getHeight();
 			break;
 		}
-
+		al_play_sample(shot, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		live = true;
 	}
 }

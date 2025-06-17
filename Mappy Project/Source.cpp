@@ -51,7 +51,7 @@ int main(void)
 		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	if (!al_reserve_samples(1)) {
+	if (!al_reserve_samples(7)) {
 		exit(9);
 	}
 	sample = al_load_sample("07 - The Palace Of Insane.wav");

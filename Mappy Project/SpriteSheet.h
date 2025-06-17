@@ -3,8 +3,8 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <iostream>
 using namespace std;
 class Sprite
@@ -28,7 +28,6 @@ public:
 private:
 	float x;
 	float y;
-
 	int maxFrame;
 	int curFrame;
 	int frameCount;
@@ -40,5 +39,6 @@ private:
 	int animationDirection;
 
 	ALLEGRO_BITMAP *image;
+	ALLEGRO_SAMPLE *walk;
 };
 #endif

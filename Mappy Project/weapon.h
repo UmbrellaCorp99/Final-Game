@@ -2,6 +2,8 @@
 #define WEAPONH
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "EnemySprite.h"
 #include "SpriteSheet.h"
 class weapon
@@ -24,6 +26,7 @@ private:
 	int speed;
 	int dir;
 	ALLEGRO_BITMAP* image;
+	ALLEGRO_SAMPLE* shot;
 };
 #endif
 
