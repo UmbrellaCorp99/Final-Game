@@ -30,59 +30,64 @@ void Enemy::InitSprites(int width, int height)
 
 void Enemy::UpdateSprites(int width, int height, Sprite &player)
 {
-	int oldx = x;
-	int oldy = y;
+	if (live) {
+		int oldx = x;
+		int oldy = y;
 
-	if (x < player.getX()) { //right
-		animationDirection = 1;
-		animationRows = 6;
-		x += 1;
-		if (++frameCount > frameDelay)
-		{
-			frameCount = 0;
-			if (++curFrame > 74)
-				curFrame = 72;
+		if (x < player.getX()) { //right
+			animationDirection = 1;
+			animationRows = 6;
+			x += 1;
+			if (++frameCount > frameDelay)
+			{
+				frameCount = 0;
+				if (++curFrame > 74)
+					curFrame = 72;
+			}
 		}
-	}
-	else if (x > player.getX()) { //left
-		animationDirection = 2;
-		animationRows = 5;
-		x -= 1;
-		if (++frameCount > frameDelay)
-		{
-			frameCount = 0;
-			if (++curFrame > 62)
-				curFrame = 60;
+		else if (x > player.getX()) { //left
+			animationDirection = 2;
+			animationRows = 5;
+			x -= 1;
+			if (++frameCount > frameDelay)
+			{
+				frameCount = 0;
+				if (++curFrame > 62)
+					curFrame = 60;
+			}
 		}
-	}
-	if (y < player.getY()) { //down
-		animationDirection = 3;
-		animationRows = 4;
-		y += 1;
-		if (++frameCount > frameDelay)
-		{
-			frameCount = 0;
-			if (++curFrame > 50)
-				curFrame = 48;
+		if (y < player.getY()) { //down
+			animationDirection = 3;
+			animationRows = 4;
+			y += 1;
+			if (++frameCount > frameDelay)
+			{
+				frameCount = 0;
+				if (++curFrame > 50)
+					curFrame = 48;
+			}
 		}
-	}
-	else if (y > player.getY()) { //up
-		animationDirection = 4;
-		animationRows = 7;
-		y -= 1;
-		if (++frameCount > frameDelay)
-		{
-			frameCount = 0;
-			if (++curFrame > 74)
-				curFrame = 72;
+		else if (y > player.getY()) { //up
+			animationDirection = 4;
+			animationRows = 7;
+			y -= 1;
+			if (++frameCount > frameDelay)
+			{
+				frameCount = 0;
+				if (++curFrame > 74)
+					curFrame = 72;
+			}
 		}
 	}
 }
 
 void Enemy::DrawSprites(int xoffset, int yoffset)
 {
-	int fx = (curFrame % animationColumns) * frameWidth;
-	int fy = animationRows * frameHeight;
+	if (live) {
+		int fx = (curFrame % animationColumns) * frameWidth;
+		int fy = animationRows * frameHeight;
 
-	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	}
+	
 }
