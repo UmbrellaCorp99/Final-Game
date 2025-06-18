@@ -31,15 +31,20 @@ int main(void)
 	const int numEnemies = 10;
 	const int numBullets = 5;
 	int count = 0;
+	bool track1Started = false;
+	bool track2Started = false;
 	srand(time(NULL));
 	//allegro variable
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_SAMPLE* sample = NULL;
+	ALLEGRO_SAMPLE* sample2 = NULL;
 	ALLEGRO_SAMPLE* dead = NULL;
 	ALLEGRO_BITMAP* died = NULL;
 	ALLEGRO_FONT* font = NULL;
+	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
+	ALLEGRO_SAMPLE_INSTANCE* instance2 = NULL;
 
 	//program init
 	if(!al_init())										//initialize Allegro
@@ -150,21 +155,65 @@ int main(void)
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					count++;
 				}
+				else if (count == 1) {
+					player.addStageCleared();
+					player.resetLives();
+					if (MapLoad("FinalProjectMap3.FMP", 1))
+						return -5;
+					if (!track1Started) {
+						al_stop_samples();
+
+						sample = al_load_sample("music/Nosferatu first.wav");
+						instance1 = al_create_sample_instance(sample);
+						al_attach_sample_instance_to_mixer(instance1, al_get_default_mixer());
+						al_set_sample_instance_playmode(instance1, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance1);
+
+						track1Started = true;
+					}
+					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
+					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					for (int i = 0; i < numEnemies; i++) {
+						enemy[i].setLive(false);
+					}
+					for (int i = 0; i < numBullets; i++) {
+						bullet[i].setLive(false);
+					}
+					player.setX((mapwidth*32)/2);
+					player.setY((mapheight * 32)/2);
+					player.DrawSprites(xOff, yOff);
+					al_flip_display();
+					al_clear_to_color(al_map_rgb(0, 0, 0));
+					count++;
+				}
+
 			for (int i = 0; i < numBullets; i++) {
 				bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 
 			}
-			for (int i = 0; i < numEnemies; i++) {
-				enemy[i].InitSprites(mapwidth*32, mapheight*32);
+			if (count == 0 || count == 1) {
+				for (int i = 0; i < numEnemies; i++) {
+					enemy[i].InitSprites(mapwidth * 32, mapheight * 32);
+				}
+				for (int i = 0; i < numEnemies; i++) {
+					enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
+				}
+				for (int i = 0; i < numBullets; i++) {
+					bullet[i].collideWeapon(enemy, numEnemies, player);
+				}
+				for (int i = 0; i < numEnemies; i++) {
+					enemy[i].CollideSprite(player);
+				}
 			}
-			for (int i = 0; i < numEnemies; i++) {
-				enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
-			}
-			for (int i = 0; i < numBullets; i++) {
-				bullet[i].collideWeapon(enemy, numEnemies, player);
-			}
-			for (int i = 0; i < numEnemies; i++) {
-				enemy[i].CollideSprite(player);
+			if (count == 2) {
+				if (track1Started && !track2Started && !al_get_sample_instance_playing(instance1)) {
+					sample2 = al_load_sample("music/nosferatu loop.wav");
+					instance2 = al_create_sample_instance(sample2);
+					al_attach_sample_instance_to_mixer(instance2, al_get_default_mixer());
+					al_set_sample_instance_playmode(instance2, ALLEGRO_PLAYMODE_LOOP);
+					al_play_sample_instance(instance2);
+					track2Started = true;
+				}
 			}
 			render = true;
 
@@ -284,6 +333,9 @@ int main(void)
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
 	al_destroy_sample(sample);
+	al_destroy_sample(sample2);
+	al_destroy_sample_instance(instance1);
+	al_destroy_sample_instance(instance2);
 	al_destroy_sample(dead);
 	al_destroy_bitmap(died);
 	al_destroy_font(font);
