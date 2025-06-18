@@ -15,6 +15,7 @@
 #include "status3.h"
 #include "herb.h"
 #include <iostream>
+#include "objective.h"
 using namespace std;
 
 int collided(int x, int y);  //Tile Collision
@@ -88,12 +89,14 @@ int main(void)
 	status2 caution;
 	status3 danger;
 	herb Herb;
+	objective item;
 
 	player.InitSprites(360,50);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
 	Herb.startHerb(350, 600);
+	item.startObjective(325, 700);
 	
 	int xOff = 0;
 	int yOff = 0;
@@ -115,6 +118,7 @@ int main(void)
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
 	player.DrawSprites(xOff,yOff);
 	Herb.drawHerb(xOff, yOff);
+	item.drawObjective(xOff, yOff);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
 	while(!done)
@@ -134,10 +138,13 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,1);
 			else
 				player.UpdateSprites(WIDTH,HEIGHT,2);
-			if (player.CollisionEndBlock())
+			if (player.CollisionEndBlock() && player.getObjective())
 				if (count == 0) {
 					player.addStageCleared();
 					player.resetLives();
+					player.setObjective(false);
+					item.incStage();
+					item.startObjective(200, 100);
 					if (MapLoad("FinalProjectMap2.FMP", 1))
 						return -5;
 					al_stop_samples();
@@ -145,6 +152,9 @@ int main(void)
 					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					item.drawObjective(xOff, yOff);
+					Herb.startHerb(400, 400);
+					Herb.drawHerb(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
@@ -208,6 +218,7 @@ int main(void)
 					enemy[i].CollideSprite(player);
 				}
 				Herb.collideHerb(player);
+				item.collideObjective(player);
 			}
 			if (count == 2) {
 				if (track1Started && !track2Started && !al_get_sample_instance_playing(instance1)) {
@@ -300,6 +311,7 @@ int main(void)
 			//draw foreground tiles
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
 			Herb.drawHerb(xOff, yOff);
+			item.drawObjective(xOff, yOff);
 			for (int i = 0; i < numEnemies; i++) {
 				enemy[i].DrawSprites(xOff, yOff);
 			}

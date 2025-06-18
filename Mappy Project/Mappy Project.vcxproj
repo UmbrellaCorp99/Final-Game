@@ -88,6 +88,7 @@
     <ClCompile Include="EnemySprite.cpp" />
     <ClCompile Include="herb.cpp" />
     <ClCompile Include="mappy_A5.c" />
+    <ClCompile Include="objective.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="status.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="EnemySprite.h" />
     <ClInclude Include="herb.h" />
     <ClInclude Include="mappy_A5.h" />
+    <ClInclude Include="objective.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="status.h" />
     <ClInclude Include="status2.h" />

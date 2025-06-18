@@ -17,6 +17,7 @@ void Sprite::InitSprites(int xstart, int ystart)
 	y = ystart;
 
 	stagesCleared = 0;
+	objective = false;
 	kills = 0;
 	maxFrame = 3;
 	curFrame = 0;
