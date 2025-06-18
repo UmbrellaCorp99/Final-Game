@@ -3,7 +3,7 @@
 Enemy::Enemy()
 {
 	image = al_load_bitmap("player.png");
-	injured = al_load_sample("05 PC-Voice (S.E. Collection).wav");
+	injured = al_load_sample("music/05 PC-Voice (S.E. Collection).wav");
 	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
 
 	maxFrame = 3;

@@ -2,7 +2,7 @@
 
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
-	shot = al_load_sample("02 Arms (S.E. Collection).wav");
+	shot = al_load_sample("music/02 Arms (S.E. Collection).wav");
 	live = false;
 	speed = 15;
 	boundx = al_get_bitmap_width(image);

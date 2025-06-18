@@ -88,12 +88,14 @@
     <ClCompile Include="mappy_A5.c" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="status.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemySprite.h" />
     <ClInclude Include="mappy_A5.h" />
     <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="status.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>

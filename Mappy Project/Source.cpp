@@ -8,6 +8,7 @@
 #include "EnemySprite.h"
 #include "weapon.h"
 #include "mappy_A5.h"
+#include "status.h"
 #include <iostream>
 using namespace std;
 
@@ -55,7 +56,7 @@ int main(void)
 	if (!al_reserve_samples(12)) {
 		exit(9);
 	}
-	sample = al_load_sample("07 - The Palace Of Insane.wav");
+	sample = al_load_sample("music/07 - The Palace Of Insane.wav");
 
 	//addon init
 	al_install_keyboard();
@@ -67,8 +68,10 @@ int main(void)
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
+	status healthBar;
 
 	player.InitSprites(WIDTH,HEIGHT);
+	healthBar.load_animated_status(54, WIDTH, HEIGHT);
 	
 	int xOff = 0;
 	int yOff = 0;
@@ -214,6 +217,8 @@ int main(void)
 				bullet[i].drawWeapon(xOff, yOff);
 
 			}
+			healthBar.updateStatus(player);
+			healthBar.drawStatus(xOff, yOff);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 			if (player.getLives() == 0) {

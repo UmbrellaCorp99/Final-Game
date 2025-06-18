@@ -5,7 +5,7 @@
 Sprite::Sprite()
 {
 	image=NULL;
-	lives = 5;
+	lives = 6;
 }
 Sprite::~Sprite()
 {
