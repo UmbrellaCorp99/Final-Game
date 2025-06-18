@@ -18,6 +18,8 @@ public:
 	bool CollideSprite();
 	float getX() {return x;}
 	float getY() {return y;}
+	void setX(int newx) { x = newx; }
+	void setY(int newy) { y = newy; }
 	int getWidth() {return frameWidth;}
 	int getHeight() {return frameHeight;}
 	int getDir() { return animationDirection; }

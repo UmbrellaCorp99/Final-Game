@@ -128,6 +128,8 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
 				if (count == 0) {
+					player.addStageCleared();
+					player.resetLives();
 					if (MapLoad("FinalProjectMap2.FMP", 1))
 						return -5;
 					al_stop_samples();
@@ -141,7 +143,9 @@ int main(void)
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);
 					}
-					player.DrawSprites(0, 0);
+					player.setX(WIDTH*.75);
+					player.setY((mapheight*32) - (player.getHeight()*2));
+					player.DrawSprites(xOff, yOff);
 					al_flip_display();
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					count++;

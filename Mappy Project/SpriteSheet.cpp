@@ -116,7 +116,7 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 
 bool Sprite::CollisionEndBlock()
 {
-	if (endValue(x + frameWidth/2, y + frameHeight + 5))
+	if (endValue(x + frameWidth/2, y-5))
 		return true;
 	else
 		return false;
