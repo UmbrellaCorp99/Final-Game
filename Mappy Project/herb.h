@@ -2,6 +2,8 @@
 #define HERBH
 #include <allegro5//allegro.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "SpriteSheet.h"
 class herb
 {
@@ -17,5 +19,6 @@ private:
 	int x, y;
 	int boundx, boundy;
 	ALLEGRO_BITMAP* image;
+	ALLEGRO_SAMPLE* useHerb;
 };
 #endif

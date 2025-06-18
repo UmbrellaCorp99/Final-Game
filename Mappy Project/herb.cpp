@@ -2,6 +2,7 @@
 
 herb::herb() {
 	image = al_load_bitmap("items.png");
+	useHerb = al_load_sample("music/herb.wav");
 	boundx = 48;
 	boundy = 31;
 	live = false;
@@ -28,6 +29,7 @@ void herb::collideHerb(Sprite& player) {
 		{
 			player.resetLives();
 			live = false;
+			al_play_sample(useHerb, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		}
 	}
 }
