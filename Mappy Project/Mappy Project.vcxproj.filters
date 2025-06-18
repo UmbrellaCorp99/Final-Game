@@ -33,6 +33,12 @@
     <ClCompile Include="status.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="status2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="status3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mappy_A5.h">
@@ -48,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="status2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="status3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

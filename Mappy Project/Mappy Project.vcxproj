@@ -89,6 +89,8 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="status.cpp" />
+    <ClCompile Include="status2.cpp" />
+    <ClCompile Include="status3.cpp" />
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +98,8 @@
     <ClInclude Include="mappy_A5.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="status.h" />
+    <ClInclude Include="status2.h" />
+    <ClInclude Include="status3.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,8 @@
 #include "weapon.h"
 #include "mappy_A5.h"
 #include "status.h"
+#include "status2.h"
+#include "status3.h"
 #include <iostream>
 using namespace std;
 
@@ -68,10 +70,14 @@ int main(void)
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
-	status healthBar;
+	status fine;
+	status2 caution;
+	status3 danger;
 
 	player.InitSprites(WIDTH,HEIGHT);
-	healthBar.load_animated_status(54, WIDTH, HEIGHT);
+	fine.load_animated_status(54, WIDTH, HEIGHT);
+	caution.load_animated_status(54, WIDTH, HEIGHT);
+	danger.load_animated_status(54, WIDTH, HEIGHT);
 	
 	int xOff = 0;
 	int yOff = 0;
@@ -217,8 +223,18 @@ int main(void)
 				bullet[i].drawWeapon(xOff, yOff);
 
 			}
-			healthBar.updateStatus(player);
-			healthBar.drawStatus(xOff, yOff);
+			if (player.getLives() > 4) {
+				fine.updateStatus();
+				fine.drawStatus(xOff, yOff);
+			}
+			else if (player.getLives() > 2) {
+				caution.updateStatus();
+				caution.drawStatus(xOff, yOff);
+			}
+			else if (player.getLives() > 0) {
+				danger.updateStatus();
+				danger.drawStatus(xOff, yOff);
+			}
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 			if (player.getLives() == 0) {

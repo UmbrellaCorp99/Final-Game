@@ -1,12 +1,12 @@
-#ifndef STATUSH
-#define STATUSH
+#ifndef STATUS3H
+#define STATUS3H
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include "SpriteSheet.h"
-class status
+class status3
 {
 public:
-	~status();
+	~status3();
 	void updateStatus();
 	void load_animated_status(int size, int WIDTH, int HEIGHT);
 	void drawStatus(int xOffset, int yOffset);
