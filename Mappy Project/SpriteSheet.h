@@ -31,9 +31,11 @@ public:
 	void addKill() { kills++; }
 	int getStagesCleared() { return stagesCleared; }
 	void addStageCleared() { stagesCleared++; }
+	void setObjective(bool b) { objective = b; }
 private:
 	int stagesCleared;
 	int kills;
+	bool objective;
 	float x;
 	float y;
 	int lives;

@@ -1,18 +1,19 @@
 #include "herb.h"
 
 herb::herb() {
-	image = al_load_bitmap("items.png");
+	image = al_load_bitmap("G_herb.png");
 	useHerb = al_load_sample("music/herb.wav");
-	boundx = 48;
-	boundy = 31;
+	boundx = 50;
+	boundy = 40;
 	live = false;
 }
 herb::~herb() {
 	al_destroy_bitmap(image);
 }
 void herb::drawHerb(int xOff, int yOff) {
-	if(live){
-		al_draw_bitmap_region(image, boundx * 0.1, boundy * 7.1, boundx, boundy, x-xOff, y-yOff, 0);
+	if (live) {
+		al_convert_mask_to_alpha(image, al_map_rgb(0, 0, 0));
+		al_draw_scaled_bitmap(image, 0, 0, 100, 80, x - xOff, y - yOff, 50, 40, 0);
 	}
 }
 void herb::startHerb(int startx, int starty) {
