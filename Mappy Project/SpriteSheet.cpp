@@ -26,7 +26,7 @@ void Sprite::InitSprites(int width, int height)
 	frameHeight = 32;
 	animationColumns = 3;
 	animationRows = 8;
-	animationDirection = 1;
+	animationDirection = 2;
 
 	image = al_load_bitmap("player.png");
 	al_convert_mask_to_alpha(image, al_map_rgb(255,0,255));
@@ -81,8 +81,6 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 				curFrame = 0;
 		}
 	}
-	else //represent that they hit the space bar and that mean direction = 0
-		animationDirection = dir;
 
 	//check for collided with foreground tiles
 	if (animationDirection==0)
