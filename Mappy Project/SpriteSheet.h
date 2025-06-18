@@ -12,7 +12,7 @@ class Sprite
 public:
 	Sprite();
 	~Sprite();
-	void InitSprites(int width, int height);
+	void InitSprites(int xstart, int ystart);
 	void UpdateSprites(int width, int height, int dir); //dir 1 = right, 0 = left, 2 = Standing Still
 	void DrawSprites(int xoffset, int yoffset);
 	bool CollideSprite();
@@ -24,6 +24,7 @@ public:
 	bool CollisionEndBlock();
 	void removeLife() { lives--; }
 	int getLives() { return lives; }
+	void resetLives() { lives = 6; }
 	int getKills() { return kills;}
 	void addKill() { kills++; }
 	int getStagesCleared() { return stagesCleared; }

@@ -11,10 +11,10 @@ Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
 }
-void Sprite::InitSprites(int width, int height)
+void Sprite::InitSprites(int xstart, int ystart)
 {
-	x = 360;
-	y = 50;
+	x = xstart;
+	y = ystart;
 
 	stagesCleared = 0;
 	kills = 0;

@@ -30,6 +30,7 @@ int main(void)
 	//Player Variable
 	const int numEnemies = 10;
 	const int numBullets = 5;
+	int count = 0;
 	srand(time(NULL));
 	//allegro variable
 	ALLEGRO_DISPLAY *display = NULL;
@@ -82,7 +83,7 @@ int main(void)
 	status2 caution;
 	status3 danger;
 
-	player.InitSprites(WIDTH,HEIGHT);
+	player.InitSprites(360,50);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
@@ -105,7 +106,7 @@ int main(void)
 
 	//draw foreground tiles
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
-	player.DrawSprites(0,0);
+	player.DrawSprites(xOff,yOff);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
 	while(!done)
@@ -126,7 +127,25 @@ int main(void)
 			else
 				player.UpdateSprites(WIDTH,HEIGHT,2);
 			if (player.CollisionEndBlock())
-				cout<<"Hit an End Block\n";
+				if (count == 0) {
+					if (MapLoad("FinalProjectMap2.FMP", 1))
+						return -5;
+					al_stop_samples();
+					sample = al_load_sample("music/07 - The Palace Of Insane.wav");
+					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
+					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					for (int i = 0; i < numEnemies; i++) {
+						enemy[i].setLive(false);
+					}
+					for (int i = 0; i < numBullets; i++) {
+						bullet[i].setLive(false);
+					}
+					player.DrawSprites(0, 0);
+					al_flip_display();
+					al_clear_to_color(al_map_rgb(0, 0, 0));
+					count++;
+				}
 			for (int i = 0; i < numBullets; i++) {
 				bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 

@@ -17,6 +17,7 @@ public:
 	void updateWeapon(int width, int height);
 	void fireWeapon(Sprite &player);
 	void collideWeapon(Enemy e[], int csize, Sprite &p);
+	void setLive(bool b) { live = b; }
 private:
 	float x;
 	float y;
