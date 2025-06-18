@@ -99,7 +99,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	al_start_timer(timer);
-	al_play_sample(sample, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+	al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	//draw the background tiles
 	MapDrawBG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1);
 
