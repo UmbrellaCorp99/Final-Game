@@ -26,7 +26,7 @@ void objective::incrementStage() {
 
 void objective::drawObjective(int xOff, int yOff) {
 	if (live) {
-		al_convert_mask_to_alpha(image, al_map_rgb(0, 0, 0));
+		al_convert_mask_to_alpha(image, al_map_rgb(0, 0, 122));
 		al_draw_scaled_bitmap(image, 0, 0, 332, 211, x - xOff, y - yOff, 50, 40, 0);
 	}
 }

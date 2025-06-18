@@ -25,6 +25,7 @@ public:
 	void setLive(bool b) { live = b; }
 	bool getlive() { return live; }
 private:
+	int speed;
 	float x;
 	float y;
 	bool live;

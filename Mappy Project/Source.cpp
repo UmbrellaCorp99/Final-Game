@@ -201,16 +201,16 @@ int main(void)
 					count++;
 				}
 
-			for (int i = 0; i < numBullets; i++) {
-				bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
-
-			}
 			if (count == 0 || count == 1) {
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].InitSprites(mapwidth * 32, mapheight * 32);
 				}
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
+				}
+				
+				for (int i = 0; i < numBullets; i++) {
+					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 				}
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].collideWeapon(enemy, numEnemies, player);
@@ -260,7 +260,10 @@ int main(void)
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = true;
 				for (int i = 0; i < numBullets; i++) {
-					bullet[i].fireWeapon(player);
+					if (!bullet[i].getLive()) {
+						bullet[i].fireWeapon(player);
+						break;  // Only fire one bullet per press
+					}
 				}
 			}
 		}
