@@ -13,6 +13,7 @@
 #include "status.h"
 #include "status2.h"
 #include "status3.h"
+#include "herb.h"
 #include <iostream>
 using namespace std;
 
@@ -87,11 +88,13 @@ int main(void)
 	status fine;
 	status2 caution;
 	status3 danger;
+	herb Herb;
 
 	player.InitSprites(360,50);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
+	Herb.startHerb(200, 200);
 	
 	int xOff = 0;
 	int yOff = 0;
@@ -112,6 +115,7 @@ int main(void)
 	//draw foreground tiles
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
 	player.DrawSprites(xOff,yOff);
+	Herb.drawHerb(xOff, yOff);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
 	while(!done)
@@ -204,6 +208,7 @@ int main(void)
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].CollideSprite(player);
 				}
+				Herb.collideHerb(player);
 			}
 			if (count == 2) {
 				if (track1Started && !track2Started && !al_get_sample_instance_playing(instance1)) {
@@ -295,6 +300,7 @@ int main(void)
 
 			//draw foreground tiles
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
+			Herb.drawHerb(xOff, yOff);
 			for (int i = 0; i < numEnemies; i++) {
 				enemy[i].DrawSprites(xOff, yOff);
 			}
