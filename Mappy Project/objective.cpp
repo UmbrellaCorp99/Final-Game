@@ -5,9 +5,9 @@ objective::objective() {
 		images[i] = NULL;
 	}
 	stage = 0;
-	images[0] = al_load_bitmap("Diamond_Key.png");
-	images[1] = al_load_bitmap("Lab_Card_Key.png");
-	pickup = al_load_sample("itemPickup.wav");
+	images[0] = al_load_bitmap("images/Diamond_Key.png");
+	images[1] = al_load_bitmap("images/Lab_Card_Key.png");
+	pickup = al_load_sample("music/itemPickup.wav");
 	image = images[stage];
 	live = false;
 }
@@ -16,6 +16,12 @@ objective::~objective() {
 		al_destroy_bitmap(images[i]);
 	}
 	al_destroy_bitmap(image);
+	al_destroy_sample(pickup);
+}
+
+void objective::incrementStage() {
+	stage++;
+	image = images[stage];
 }
 
 void objective::drawObjective(int xOff, int yOff) {
@@ -26,9 +32,12 @@ void objective::drawObjective(int xOff, int yOff) {
 }
 
 void objective::startObjective(int startx, int starty) {
-	live = true;
-	x = startx;
-	y = starty;
+	if(!live) {
+		x = startx;
+		y = starty;
+		live = true;
+	}
+	
 }
 void objective::collideObjective(Sprite& player) {
 	if (live) {

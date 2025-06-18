@@ -96,7 +96,7 @@ int main(void)
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
 	Herb.startHerb(350, 600);
-	item.startObjective(325, 700);
+	item.startObjective(250, 800);
 	
 	int xOff = 0;
 	int yOff = 0;
@@ -143,8 +143,8 @@ int main(void)
 					player.addStageCleared();
 					player.resetLives();
 					player.setObjective(false);
-					item.incStage();
-					item.startObjective(200, 100);
+					Herb.setLive(false);
+					item.incrementStage();
 					if (MapLoad("FinalProjectMap2.FMP", 1))
 						return -5;
 					al_stop_samples();
@@ -152,8 +152,7 @@ int main(void)
 					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
-					item.drawObjective(xOff, yOff);
-					Herb.startHerb(400, 400);
+					Herb.startHerb(600, 600);
 					Herb.drawHerb(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
@@ -161,6 +160,8 @@ int main(void)
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);
 					}
+					item.startObjective(450, 700);
+					item.drawObjective(xOff, yOff);
 					player.setX(WIDTH*.75);
 					player.setY((mapheight*32) - (player.getHeight()*2));
 					player.DrawSprites(xOff, yOff);

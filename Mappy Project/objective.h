@@ -14,7 +14,7 @@ public:
 	void startObjective(int startx, int starty);
 	void collideObjective(Sprite& player);
 	void setLive(bool b) { live = b; }
-	void incStage() { stage++; }
+	void incrementStage();
 private:
 	int stage;
 	bool live;
