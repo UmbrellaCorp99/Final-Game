@@ -46,7 +46,6 @@ int main(void)
 	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance2 = NULL;
-
 	//program init
 	if(!al_init())										//initialize Allegro
 		return -1;
@@ -94,7 +93,7 @@ int main(void)
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
-	Herb.startHerb(200, 200);
+	Herb.startHerb(350, 600);
 	
 	int xOff = 0;
 	int yOff = 0;

@@ -9,6 +9,7 @@ herb::herb() {
 }
 herb::~herb() {
 	al_destroy_bitmap(image);
+	al_destroy_sample(useHerb);
 }
 void herb::drawHerb(int xOff, int yOff) {
 	if (live) {
