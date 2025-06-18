@@ -31,6 +31,7 @@ int main(void)
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_SAMPLE* sample = NULL;
+	ALLEGRO_BITMAP* died = NULL;
 
 	//program init
 	if(!al_init())										//initialize Allegro
@@ -62,6 +63,7 @@ int main(void)
 	al_init_image_addon();
 	al_init_primitives_addon();
 
+	died = al_load_bitmap("you died.png");
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
@@ -215,6 +217,17 @@ int main(void)
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 			if (player.getLives() == 0) {
+				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT);
+				MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
+				for (int i = 0; i < numEnemies; i++) {
+					enemy[i].DrawSprites(xOff, yOff);
+				}
+				player.DrawSprites(xOff, yOff);
+				al_convert_mask_to_alpha(died, al_map_rgb(0, 0, 0));
+				al_draw_bitmap(died, WIDTH / 5, 0, 0);
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+				al_rest(10);
 				done = true;
 			}
 		}
@@ -223,6 +236,7 @@ int main(void)
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
 	al_destroy_sample(sample);
+	al_destroy_bitmap(died);
 	return 0;
 }
 
