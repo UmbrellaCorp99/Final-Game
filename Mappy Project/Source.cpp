@@ -269,16 +269,9 @@ int main(void)
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 			if (player.getLives() == 0) {
-				MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT);
-				MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
-				for (int i = 0; i < numEnemies; i++) {
-					enemy[i].DrawSprites(xOff, yOff);
-				}
-				player.DrawSprites(xOff, yOff);
 				al_draw_bitmap(died, WIDTH / 5, 0, 0);
 				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH/2, HEIGHT*.8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
 				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
-
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 				al_play_sample(dead, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);

@@ -32,7 +32,7 @@ void status3::load_animated_status(int size, int WIDTH, int HEIGHT) {
 	x = WIDTH - width;
 	y = HEIGHT - height;
 	curframe = 0;
-	framedelay = 4;
+	framedelay = 1;
 	framecount = 0;
 }
 
