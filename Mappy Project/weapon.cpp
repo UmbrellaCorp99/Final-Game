@@ -101,7 +101,7 @@ void weapon::updateWeapon(int width, int height) {
 	}
 }
 
-void weapon::collideWeapon(Enemy e[], int csize) {
+void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 	if (live) {
 		for (int i = 0; i < csize; i++) {
 			if (e[i].getlive()) {
@@ -112,7 +112,7 @@ void weapon::collideWeapon(Enemy e[], int csize) {
 				{
 					live = false;
 					e[i].setLive(false);
-					break;
+					p.addKill();
 				}
 			}
 		}

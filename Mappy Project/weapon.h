@@ -16,7 +16,7 @@ public:
 	void drawWeapon(int xoffset, int yoffset);
 	void updateWeapon(int width, int height);
 	void fireWeapon(Sprite &player);
-	void collideWeapon(Enemy e[], int csize);
+	void collideWeapon(Enemy e[], int csize, Sprite &p);
 private:
 	float x;
 	float y;

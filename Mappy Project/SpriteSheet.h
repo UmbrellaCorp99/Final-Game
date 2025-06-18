@@ -24,8 +24,13 @@ public:
 	bool CollisionEndBlock();
 	void removeLife() { lives--; }
 	int getLives() { return lives; }
-
+	int getKills() { return kills;}
+	void addKill() { kills++; }
+	int getStagesCleared() { return stagesCleared; }
+	void addStageCleared() { stagesCleared++; }
 private:
+	int stagesCleared;
+	int kills;
 	float x;
 	float y;
 	int lives;

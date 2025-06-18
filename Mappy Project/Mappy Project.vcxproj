@@ -48,6 +48,7 @@
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonDialog>true</Allegro_AddonDialog>
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -4,6 +4,8 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "SpriteSheet.h"
 #include "EnemySprite.h"
 #include "weapon.h"
@@ -34,7 +36,9 @@ int main(void)
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_SAMPLE* sample = NULL;
+	ALLEGRO_SAMPLE* dead = NULL;
 	ALLEGRO_BITMAP* died = NULL;
+	ALLEGRO_FONT* font = NULL;
 
 	//program init
 	if(!al_init())										//initialize Allegro
@@ -55,17 +59,21 @@ int main(void)
 		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	if (!al_reserve_samples(12)) {
+	if (!al_reserve_samples(13)) {
 		exit(9);
 	}
 	sample = al_load_sample("music/07 - The Palace Of Insane.wav");
+	dead = al_load_sample("music/death.wav");
 
 	//addon init
 	al_install_keyboard();
 	al_init_image_addon();
 	al_init_image_addon();
+	al_init_font_addon();
+	al_init_ttf_addon();
 	al_init_primitives_addon();
 
+	font = al_load_font("NeoBulletin Trash.ttf", 32, 0);
 	died = al_load_bitmap("you died.png");
 	Sprite player;
 	Enemy enemy[numEnemies];
@@ -130,7 +138,7 @@ int main(void)
 				enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
 			}
 			for (int i = 0; i < numBullets; i++) {
-				bullet[i].collideWeapon(enemy, numEnemies);
+				bullet[i].collideWeapon(enemy, numEnemies, player);
 			}
 			for (int i = 0; i < numEnemies; i++) {
 				enemy[i].CollideSprite(player);
@@ -244,10 +252,13 @@ int main(void)
 					enemy[i].DrawSprites(xOff, yOff);
 				}
 				player.DrawSprites(xOff, yOff);
-				al_convert_mask_to_alpha(died, al_map_rgb(0, 0, 0));
 				al_draw_bitmap(died, WIDTH / 5, 0, 0);
+				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH/2, HEIGHT*.8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
+				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
+
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
+				al_play_sample(dead, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_rest(10);
 				done = true;
 			}
@@ -257,7 +268,9 @@ int main(void)
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);						//destroy our display object
 	al_destroy_sample(sample);
+	al_destroy_sample(dead);
 	al_destroy_bitmap(died);
+	al_destroy_font(font);
 	return 0;
 }
 
