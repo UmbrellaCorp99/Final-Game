@@ -13,8 +13,8 @@ Sprite::~Sprite()
 }
 void Sprite::InitSprites(int width, int height)
 {
-	x = 120;
-	y = 160;
+	x = 360;
+	y = 50;
 
 	stagesCleared = 0;
 	kills = 0;

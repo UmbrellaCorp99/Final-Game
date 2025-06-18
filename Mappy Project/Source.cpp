@@ -62,7 +62,7 @@ int main(void)
 	if (!al_reserve_samples(13)) {
 		exit(9);
 	}
-	sample = al_load_sample("music/07 - The Palace Of Insane.wav");
+	sample = al_load_sample("music/06 - Death Siege.wav");
 	dead = al_load_sample("music/death.wav");
 
 	//addon init
