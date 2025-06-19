@@ -14,7 +14,7 @@ class Enemy
 public:
 	Enemy();
 	~Enemy();
-	void InitSprites(int width, int height, int level);
+	void InitSprites(int width, int height, int level, Sprite &player);
 	void UpdateSprites(int width, int height, Sprite &player);
 	void DrawSprites(int xoffset, int yoffset);
 	void CollideSprite(Sprite &p);

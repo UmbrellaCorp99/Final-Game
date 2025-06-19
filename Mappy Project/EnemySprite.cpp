@@ -22,7 +22,7 @@ Enemy::~Enemy()
 	al_destroy_bitmap(image);
 	al_destroy_sample(injured);
 }
-void Enemy::InitSprites(int width, int height, int level)
+void Enemy::InitSprites(int width, int height, int level, Sprite &player)
 {
 	if (!live) {
 		x = (rand() % width);
@@ -33,7 +33,15 @@ void Enemy::InitSprites(int width, int height, int level)
 		else if (level == 1) {
 			lives = 3;
 		}
-		live = true;
+		if (x > (player.getX() - player.getWidth()) &&
+			x < (player.getX() + player.getWidth()) &&
+			y >(player.getY() - player.getHeight()) &&
+			y < (player.getY() + player.getHeight())) {
+			live = false;
+		}
+		else {
+			live = true;
+		}
 	}
 }
 

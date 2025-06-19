@@ -215,7 +215,7 @@ int main(void)
 
 			if (count == 0 || count == 1) {
 				for (int i = 0; i < numEnemies; i++) {
-					enemy[i].InitSprites(mapwidth * 32, mapheight * 32, count);
+					enemy[i].InitSprites(mapwidth * 32, mapheight * 32, count, player);
 				}
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
