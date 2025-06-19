@@ -45,6 +45,9 @@
     <ClCompile Include="objective.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="finalboss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mappy_A5.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="objective.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="finalboss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

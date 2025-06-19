@@ -63,7 +63,7 @@ void weapon::fireWeapon(Sprite &player) {
 			y = player.getY() + player.getHeight();
 			break;
 		}
-		al_play_sample(shot, .2, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample(shot, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		live = true;
 	}
 }

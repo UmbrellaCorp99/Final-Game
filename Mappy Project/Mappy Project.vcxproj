@@ -86,6 +86,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnemySprite.cpp" />
+    <ClCompile Include="finalboss.cpp" />
     <ClCompile Include="herb.cpp" />
     <ClCompile Include="mappy_A5.c" />
     <ClCompile Include="objective.cpp" />
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemySprite.h" />
+    <ClInclude Include="finalboss.h" />
     <ClInclude Include="herb.h" />
     <ClInclude Include="mappy_A5.h" />
     <ClInclude Include="objective.h" />
