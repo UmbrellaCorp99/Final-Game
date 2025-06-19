@@ -160,7 +160,6 @@ int main(void)
 					Herb.drawHerb(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
-						enemy[i].setLives(2);
 					}
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);
@@ -200,8 +199,6 @@ int main(void)
 					}
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
-					boss.initBoss((mapwidth * 32) / 3, (mapheight * 32) / 3);
-					boss.drawBoss(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
@@ -245,6 +242,7 @@ int main(void)
 					al_play_sample_instance(instance2);
 					track2Started = true;
 				}
+				boss.initBoss((mapwidth * 32) / 3, (mapheight * 32) / 3);
 				boss.updateBoss(WIDTH, HEIGHT, player);
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
@@ -254,10 +252,14 @@ int main(void)
 				}
 				boss.collideBoss(player);
 				Herb.collideHerb(player);
-				if (boss.getLives() == 0) {
+				if (!boss.getlive()) {
 					player.addStageCleared();
-					track2Started = false;
-					al_stop_sample_instance(instance2);
+					if (track2Started) {
+						al_stop_sample_instance(instance2);
+					}
+					else {
+						al_stop_sample_instance(instance1);
+					}
 					win = true;
 				}
 			}
@@ -385,6 +387,7 @@ int main(void)
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
 				al_rest(10);
+				done = true;
 			}
 		}
 	}

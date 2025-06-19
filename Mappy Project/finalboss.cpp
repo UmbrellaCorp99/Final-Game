@@ -33,7 +33,7 @@ void finalboss::initBoss(int width, int height) {
 
 void finalboss::drawBoss(int xOff, int yOff) {
 	if (live) {
-		int fx = (curFrame % animationColumns) * frameWidth;
+		int fx = (animationColumns / curFrame) * frameWidth;
 		int fy = animationRows * frameHeight;
 
 		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xOff, y - yOff, 0);
@@ -48,7 +48,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		if (x < player.getX()) { //right
 			animationDirection = 1;
 			animationRows = 6;
-			x += .5;
+			x += 1;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -59,7 +59,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		else if (x > player.getX()) { //left
 			animationDirection = 2;
 			animationRows = 5;
-			x -= .5;
+			x -= 1;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -70,7 +70,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		if (y < player.getY()) { //down
 			animationDirection = 3;
 			animationRows = 4;
-			y += .5;
+			y += 1;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -81,7 +81,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		else if (y > player.getY()) { //up
 			animationDirection = 4;
 			animationRows = 7;
-			y -= .5;
+			y -= 1;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;

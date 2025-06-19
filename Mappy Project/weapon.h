@@ -18,7 +18,7 @@ public:
 	void updateWeapon(int width, int height);
 	void fireWeapon(Sprite &player);
 	void collideWeapon(Enemy e[], int csize, Sprite &p);
-	void collideWeaponBoss(finalboss e, Sprite& p);
+	void collideWeaponBoss(finalboss &e, Sprite& p);
 	void setLive(bool b) { live = b; }
 	bool getLive() { return live; }
 private:

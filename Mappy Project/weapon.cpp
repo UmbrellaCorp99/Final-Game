@@ -123,7 +123,7 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 	}
 }
 
-void weapon::collideWeaponBoss(finalboss e, Sprite& p) {
+void weapon::collideWeaponBoss(finalboss &e, Sprite& p) {
 	if (live) {
 		if (x > (e.getX() - e.getWidth()) &&
 			x < (e.getX() + e.getWidth()) &&
