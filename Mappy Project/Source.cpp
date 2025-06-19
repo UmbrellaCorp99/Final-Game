@@ -43,6 +43,7 @@ int main(void)
 	ALLEGRO_SAMPLE* sample = NULL;
 	ALLEGRO_SAMPLE* sample2 = NULL;
 	ALLEGRO_SAMPLE* dead = NULL;
+	ALLEGRO_SAMPLE* door = NULL;
 	ALLEGRO_BITMAP* died = NULL;
 	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
@@ -66,7 +67,7 @@ int main(void)
 		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	if (!al_reserve_samples(13)) {
+	if (!al_reserve_samples(14)) {
 		exit(9);
 	}
 	sample = al_load_sample("music/06 - Death Siege.wav");
@@ -145,11 +146,11 @@ int main(void)
 					player.setObjective(false);
 					Herb.setLive(false);
 					item.incrementStage();
+					al_stop_samples();
+					door = al_load_sample("music/doorOpen.wav");
+					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 					if (MapLoad("FinalProjectMap2.FMP", 1))
 						return -5;
-					al_stop_samples();
-					sample = al_load_sample("music/07 - The Palace Of Insane.wav");
-					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
 					Herb.startHerb(600, 600);
@@ -166,22 +167,30 @@ int main(void)
 					player.setX(WIDTH*.75);
 					player.setY((mapheight*32) - (player.getHeight()*2));
 					player.DrawSprites(xOff, yOff);
+					door = al_load_sample("music/doorClose.wav");
+					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+					sample = al_load_sample("music/07 - The Palace Of Insane.wav");
+					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 					al_flip_display();
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					count++;
 				}
 				else if (count == 1) {
 					player.addStageCleared();
-					player.resetLives();
+					player.resetLives(); 
+					Herb.setLive(false);
+					al_stop_samples();
+					door = al_load_sample("music/doorOpen.wav");
+					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 					if (MapLoad("FinalProjectMap3.FMP", 1))
 						return -5;
 					if (!track1Started) {
-						al_stop_samples();
-
 						sample = al_load_sample("music/Nosferatu first.wav");
 						instance1 = al_create_sample_instance(sample);
 						al_attach_sample_instance_to_mixer(instance1, al_get_default_mixer());
 						al_set_sample_instance_playmode(instance1, ALLEGRO_PLAYMODE_ONCE);
+						door = al_load_sample("music/doorClose.wav");
+						al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 						al_play_sample_instance(instance1);
 
 						track1Started = true;
@@ -231,6 +240,14 @@ int main(void)
 					al_play_sample_instance(instance2);
 					track2Started = true;
 				}
+				for (int i = 0; i < numBullets; i++) {
+					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
+				}
+				for (int i = 0; i < numBullets; i++) {
+					bullet[i].collideWeapon(enemy, numEnemies, player);
+				}
+				Herb.collideHerb(player);
+				item.collideObjective(player);
 			}
 			render = true;
 
@@ -356,6 +373,7 @@ int main(void)
 	al_destroy_display(display);						//destroy our display object
 	al_destroy_sample(sample);
 	al_destroy_sample(sample2);
+	al_destroy_sample(door);
 	al_destroy_sample_instance(instance1);
 	al_destroy_sample_instance(instance2);
 	al_destroy_sample(dead);
