@@ -118,6 +118,9 @@ int main(void)
 	intro = al_load_sample("music/intro.wav");
 	al_play_sample(intro, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "Welcome to my game!");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "This  is inspired by Resident Evil Code: Veronica");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "Which released on the Sega Dreamcast in 2000");
+	al_rest(15);
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 33, ALLEGRO_ALIGN_CENTER, "You must survive 3 rounds against the terrifying creatures.");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 66, ALLEGRO_ALIGN_CENTER, "Each level has one key item that you must obtain before you can proceed.");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 99, ALLEGRO_ALIGN_CENTER, "You will fully heal between levels and collecting herbs.");
@@ -126,7 +129,7 @@ int main(void)
 	al_draw_bitmap(keyPic, WIDTH * .6, HEIGHT / 2, 0);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_rest(30);
+	al_rest(15);
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "You have once again entered the world of survival horror");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 198, ALLEGRO_ALIGN_CENTER, "Good Luck...");
 	al_flip_display();
