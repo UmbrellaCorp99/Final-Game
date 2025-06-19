@@ -25,6 +25,7 @@ public:
 	int getDir() { return animationDirection; }
 	bool CollisionEndBlock();
 	void removeLife() { lives--; }
+	void removeLives(int i) { lives -= i; }
 	int getLives() { return lives; }
 	void resetLives() { lives = 6; }
 	int getKills() { return kills;}

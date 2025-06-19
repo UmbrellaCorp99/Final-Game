@@ -28,10 +28,10 @@ void Enemy::InitSprites(int width, int height, int level)
 		x = (rand() % width);
 		y = (rand() % width);
 		if (level == 0) {
-			lives = 1;
+			lives = 2;
 		}
 		else if (level == 1) {
-			lives = 2;
+			lives = 3;
 		}
 		live = true;
 	}

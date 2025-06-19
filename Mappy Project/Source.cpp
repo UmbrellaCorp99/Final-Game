@@ -14,6 +14,7 @@
 #include "status2.h"
 #include "status3.h"
 #include "herb.h"
+#include "finalboss.h"
 #include <iostream>
 #include "objective.h"
 using namespace std;
@@ -29,6 +30,7 @@ int main(void)
 	//variables
 	bool done = false;
 	bool render = false;
+	bool win = false;
 	//Player Variable
 	const int numEnemies = 10;
 	const int numBullets = 5;
@@ -91,6 +93,7 @@ int main(void)
 	status3 danger;
 	herb Herb;
 	objective item;
+	finalboss boss;
 
 	player.InitSprites(360,50);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
@@ -197,6 +200,8 @@ int main(void)
 					}
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					boss.initBoss((mapwidth * 32) / 3, (mapheight * 32) / 3);
+					boss.drawBoss(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
@@ -231,7 +236,7 @@ int main(void)
 				Herb.collideHerb(player);
 				item.collideObjective(player);
 			}
-			if (count == 2) {
+			else if (count == 2) {
 				if (track1Started && !track2Started && !al_get_sample_instance_playing(instance1)) {
 					sample2 = al_load_sample("music/nosferatu loop.wav");
 					instance2 = al_create_sample_instance(sample2);
@@ -240,14 +245,21 @@ int main(void)
 					al_play_sample_instance(instance2);
 					track2Started = true;
 				}
+				boss.updateBoss(WIDTH, HEIGHT, player);
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 				}
 				for (int i = 0; i < numBullets; i++) {
-					bullet[i].collideWeapon(enemy, numEnemies, player);
+					bullet[i].collideWeaponBoss(boss, player);
 				}
+				boss.collideBoss(player);
 				Herb.collideHerb(player);
-				item.collideObjective(player);
+				if (boss.getLives() == 0) {
+					player.addStageCleared();
+					track2Started = false;
+					al_stop_sample_instance(instance2);
+					win = true;
+				}
 			}
 			render = true;
 
@@ -342,6 +354,7 @@ int main(void)
 				bullet[i].drawWeapon(xOff, yOff);
 
 			}
+			boss.drawBoss(xOff, yOff);
 			if (player.getLives() > 4) {
 				fine.updateStatus();
 				fine.drawStatus(xOff, yOff);
@@ -356,7 +369,7 @@ int main(void)
 			}
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
-			if (player.getLives() == 0) {
+			if (player.getLives() <= 0) {
 				al_draw_bitmap(died, WIDTH / 5, 0, 0);
 				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH/2, HEIGHT*.8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
 				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
@@ -365,6 +378,13 @@ int main(void)
 				al_play_sample(dead, .6, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_rest(10);
 				done = true;
+			}
+			else if (win == true) {
+				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
+				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
+				al_flip_display();
+				al_clear_to_color(al_map_rgb(0, 0, 0));
+				al_rest(10);
 			}
 		}
 	}

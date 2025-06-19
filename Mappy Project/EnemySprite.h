@@ -28,7 +28,6 @@ public:
 	void setLives(int i) { lives = 1; }
 	void removeLives() { lives--; }
 private:
-	int speed;
 	float x;
 	float y;
 	bool live;

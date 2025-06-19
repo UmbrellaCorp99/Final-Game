@@ -122,3 +122,20 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 		
 	}
 }
+
+void weapon::collideWeaponBoss(finalboss e, Sprite& p) {
+	if (live) {
+		if (x > (e.getX() - e.getWidth()) &&
+			x < (e.getX() + e.getWidth()) &&
+			y >(e.getY() - e.getHeight()) &&
+			y < (e.getY() + e.getHeight()))
+		{
+			e.removeLives();
+			live = false;
+			if (e.getLives() == 0) {
+				e.setLive(false);
+				p.addKill();
+			}
+		}
+	}
+}
