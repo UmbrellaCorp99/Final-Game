@@ -156,6 +156,7 @@ int main(void)
 					Herb.drawHerb(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
+						enemy[i].setLives(2);
 					}
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);

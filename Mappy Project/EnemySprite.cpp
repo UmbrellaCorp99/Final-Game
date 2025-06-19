@@ -22,12 +22,17 @@ Enemy::~Enemy()
 	al_destroy_bitmap(image);
 	al_destroy_sample(injured);
 }
-void Enemy::InitSprites(int width, int height)
+void Enemy::InitSprites(int width, int height, int level)
 {
 	if (!live) {
 		x = (rand() % width);
 		y = (rand() % width);
-
+		if (level == 0) {
+			lives = 1;
+		}
+		else if (level == 1) {
+			lives = 2;
+		}
 		live = true;
 	}
 }

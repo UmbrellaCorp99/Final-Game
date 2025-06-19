@@ -14,7 +14,7 @@ class Enemy
 public:
 	Enemy();
 	~Enemy();
-	void InitSprites(int width, int height);
+	void InitSprites(int width, int height, int level);
 	void UpdateSprites(int width, int height, Sprite &player);
 	void DrawSprites(int xoffset, int yoffset);
 	void CollideSprite(Sprite &p);
@@ -24,11 +24,15 @@ public:
 	int getHeight() { return frameHeight; }
 	void setLive(bool b) { live = b; }
 	bool getlive() { return live; }
+	int getLives() { return lives; }
+	void setLives(int i) { lives = 1; }
+	void removeLives() { lives--; }
 private:
 	int speed;
 	float x;
 	float y;
 	bool live;
+	int lives;
 	int maxFrame;
 	int curFrame;
 	int frameCount;

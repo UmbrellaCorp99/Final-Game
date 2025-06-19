@@ -110,10 +110,12 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 					y >(e[i].getY() - e[i].getHeight()) &&
 					y < (e[i].getY() + e[i].getHeight()))
 				{
-					e[i].setLive(false);
-					p.addKill();
+					e[i].removeLives();
 					live = false;
-					std::cout << "Bullet hit enemy " << i << ", bullet now dead\n";
+					if(e[i].getLives() == 0) {
+						e[i].setLive(false);
+						p.addKill();
+					}
 				}
 			}
 		}
