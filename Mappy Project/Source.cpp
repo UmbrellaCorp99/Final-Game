@@ -47,6 +47,8 @@ int main(void)
 	ALLEGRO_SAMPLE* dead = NULL;
 	ALLEGRO_SAMPLE* door = NULL;
 	ALLEGRO_BITMAP* died = NULL;
+	ALLEGRO_SAMPLE* resultScreen = NULL;
+	ALLEGRO_BITMAP* results = NULL;
 	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance2 = NULL;
@@ -85,6 +87,7 @@ int main(void)
 
 	font = al_load_font("NeoBulletin Trash.ttf", 32, 0);
 	died = al_load_bitmap("you died.png");
+	results = al_load_bitmap("results.png");
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
@@ -382,11 +385,17 @@ int main(void)
 				done = true;
 			}
 			else if (win == true) {
-				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
-				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH / 2, HEIGHT * .9, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
+				sample = al_load_sample("music/bossDefeat.wav");
+				al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+				al_rest(6);
+				resultScreen = al_load_sample("music/2-37 - Set Free (Ranking BGM1).wav");
+				al_play_sample(resultScreen, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+				al_draw_scaled_bitmap(results, 0, 0, 1080, 607, 0, 0, WIDTH, HEIGHT, 0);
+				al_draw_textf(font, al_map_rgb(255, 0, 0), 0, HEIGHT/2, 0, "Enemies killed: %i", player.getKills());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), 0, HEIGHT * .7, 0, "Stages Cleared: %i", player.getStagesCleared());
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
-				al_rest(10);
+				al_rest(48);
 				done = true;
 			}
 		}
