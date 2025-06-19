@@ -48,7 +48,10 @@ int main(void)
 	ALLEGRO_SAMPLE* door = NULL;
 	ALLEGRO_BITMAP* died = NULL;
 	ALLEGRO_SAMPLE* resultScreen = NULL;
+	ALLEGRO_SAMPLE* intro = NULL;
 	ALLEGRO_BITMAP* results = NULL;
+	ALLEGRO_BITMAP* herbPic = NULL;
+	ALLEGRO_BITMAP* keyPic = NULL;
 	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance2 = NULL;
@@ -85,9 +88,11 @@ int main(void)
 	al_init_ttf_addon();
 	al_init_primitives_addon();
 
-	font = al_load_font("NeoBulletin Trash.ttf", 32, 0);
+	font = al_load_font("NeoBulletin Trash.ttf", 24, 0);
 	died = al_load_bitmap("you died.png");
 	results = al_load_bitmap("results.png");
+	herbPic = al_load_bitmap("G_herb2.png");
+	keyPic = al_load_bitmap("Diamond_Key.png");
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
@@ -109,6 +114,24 @@ int main(void)
 	int yOff = 0;
 	if(MapLoad("FinalProjectMap1.FMP", 1))
 		return -5;
+
+	intro = al_load_sample("music/intro.wav");
+	al_play_sample(intro, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "Welcome to my game!");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 33, ALLEGRO_ALIGN_CENTER, "You must survive 3 rounds against the terrifying creatures.");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 66, ALLEGRO_ALIGN_CENTER, "Each level has one key item that you must obtain before you can proceed.");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 99, ALLEGRO_ALIGN_CENTER, "You will fully heal between levels and collecting herbs.");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 132, ALLEGRO_ALIGN_CENTER, "The final boss will kill you in one hit, be careful!");
+	al_draw_scaled_bitmap(herbPic, 0, 0, 100, 80, 0, HEIGHT / 2, 300, 240, 0);
+	al_draw_bitmap(keyPic, WIDTH * .6, HEIGHT / 2, 0);
+	al_flip_display();
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_rest(30);
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "You have once again entered the world of survvival horror");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 198, ALLEGRO_ALIGN_CENTER, "Good Luck...");
+	al_flip_display();
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_rest(13);
 
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / 60);
@@ -402,9 +425,12 @@ int main(void)
 	}
 	MapFreeMem();
 	al_destroy_event_queue(event_queue);
-	al_destroy_display(display);						//destroy our display object
+	al_destroy_display(display);
+	al_destroy_bitmap(herbPic);
+	al_destroy_bitmap(keyPic);
 	al_destroy_sample(sample);
 	al_destroy_sample(sample2);
+	al_destroy_sample(resultScreen);
 	al_destroy_sample(door);
 	al_destroy_sample_instance(instance1);
 	al_destroy_sample_instance(instance2);
