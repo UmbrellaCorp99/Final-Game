@@ -105,10 +105,15 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 	if (live) {
 		for (int i = 0; i < csize; i++) {
 			if (e[i].getlive()) {
-				if (x > (e[i].getX() - e[i].getWidth()) &&
-					x < (e[i].getX() + e[i].getWidth()) &&
-					y >(e[i].getY() - e[i].getHeight()) &&
-					y < (e[i].getY() + e[i].getHeight()))
+				if ((((x > e[i].getX()) && x < (e[i].getX() + e[i].getWidth()) ||
+					(((x + boundx) > e[i].getX()) && ((x + boundx) < (e[i].getX() + e[i].getWidth())))) &&
+					(y > e[i].getY()) && (y < (e[i].getY() + e[i].getHeight()))) || (((x > e[i].getX()) && x < (e[i].getX() + e[i].getWidth()) ||
+						(((x + boundx) > e[i].getX()) && ((x + boundx) < (e[i].getX() + e[i].getWidth())))) &&
+						(y < (e[i].getY())) && ((y + boundy) > (e[i].getY()))) || (((y > e[i].getY()) && y < (e[i].getY() + e[i].getHeight()) ||
+							(((y + boundy) > e[i].getY()) && ((y + boundy) < (e[i].getY() + e[i].getHeight())))) &&
+							(x > (e[i].getX())) && (x < (e[i].getX() + e[i].getWidth()))) || (((y > e[i].getY()) && y < (e[i].getY() + e[i].getHeight()) ||
+								(((y + boundy) > e[i].getY()) && ((y + boundy) < (e[i].getY() + e[i].getHeight())))) &&
+								(x < e[i].getX()) && ((x + boundx) > (e[i].getX()))))
 				{
 					e[i].removeLives();
 					live = false;
@@ -125,10 +130,15 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 
 void weapon::collideWeaponBoss(finalboss &e, Sprite& p) {
 	if (live) {
-		if (x > (e.getX() - e.getWidth()) &&
-			x < (e.getX() + e.getWidth()) &&
-			y >(e.getY() - e.getHeight()) &&
-			y < (e.getY() + e.getHeight()))
+		if ((((x > e.getX()) && x < (e.getX() + e.getWidth()) ||
+			(((x + boundx) > e.getX()) && ((x + boundx) < (e.getX() + e.getWidth())))) &&
+			(y > e.getY()) && (y < (e.getY() + e.getHeight()))) || (((x > e.getX()) && x < (e.getX() + e.getWidth()) ||
+				(((x + boundx) > e.getX()) && ((x + boundx) < (e.getX() + e.getWidth())))) &&
+				(y < (e.getY())) && ((y + boundy) > (e.getY()))) || (((y > e.getY()) && y < (e.getY() + e.getHeight()) ||
+					(((y + boundy) > e.getY()) && ((y + boundy) < (e.getY() + e.getHeight())))) &&
+					(x > (e.getX())) && (x < (e.getX() + e.getWidth()))) || (((y > e.getY()) && y < (e.getY() + e.getHeight()) ||
+						(((y + boundy) > e.getY()) && ((y + boundy) < (e.getY() + e.getHeight())))) &&
+						(x < e.getX()) && ((x + boundx) > (e.getX()))))
 		{
 			e.removeLives();
 			live = false;

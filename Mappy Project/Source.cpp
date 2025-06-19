@@ -117,14 +117,17 @@ int main(void)
 
 	intro = al_load_sample("music/intro.wav");
 	al_play_sample(intro, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "Welcome to my game!");
-	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "This  is inspired by Resident Evil Code: Veronica");
-	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 0, ALLEGRO_ALIGN_CENTER, "Which released on the Sega Dreamcast in 2000");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 33, ALLEGRO_ALIGN_CENTER, "Welcome to my game!");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 66, ALLEGRO_ALIGN_CENTER, "This game is inspired by Resident Evil Code: Veronica");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 99, ALLEGRO_ALIGN_CENTER, "Which released on the Sega Dreamcast in 2000");
+	al_flip_display();
+	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_rest(15);
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 33, ALLEGRO_ALIGN_CENTER, "You must survive 3 rounds against the terrifying creatures.");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 66, ALLEGRO_ALIGN_CENTER, "Each level has one key item that you must obtain before you can proceed.");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 99, ALLEGRO_ALIGN_CENTER, "You will fully heal between levels and collecting herbs.");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 132, ALLEGRO_ALIGN_CENTER, "The final boss will kill you in one hit, be careful!");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "Move with the arrow keys, and shoot with space");
 	al_draw_scaled_bitmap(herbPic, 0, 0, 100, 80, 0, HEIGHT / 2, 300, 240, 0);
 	al_draw_bitmap(keyPic, WIDTH * .6, HEIGHT / 2, 0);
 	al_flip_display();
@@ -132,6 +135,8 @@ int main(void)
 	al_rest(15);
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "You have once again entered the world of survival horror");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 198, ALLEGRO_ALIGN_CENTER, "Good Luck...");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 297, ALLEGRO_ALIGN_CENTER, "The Audio used in this game belong to Capcom, as does the");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 330, ALLEGRO_ALIGN_CENTER, "Resident Evil franchise. This game is not for sale.");
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_rest(13);

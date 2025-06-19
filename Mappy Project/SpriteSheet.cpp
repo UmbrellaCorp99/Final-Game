@@ -41,7 +41,7 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 	if(dir == 1){ //right key
 		animationDirection = 1;
 		animationRows = 2;
-		x+=3;
+		x+=2.5;
 		if (++frameCount > frameDelay)
 		{
 			frameCount=0;
@@ -52,7 +52,7 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 	else if (dir == 0){ //left key
 		animationDirection = 0; 
 		animationRows = 1;
-		x-=3; 
+		x-=2.5; 
 		if (++frameCount > frameDelay)
 		{
 			frameCount=0;
@@ -63,7 +63,7 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 	else if (dir == 3){	//up key
 		animationDirection = 3;
 		animationRows = 3;
-		y -= 3;
+		y -= 2.5;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
@@ -74,7 +74,7 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 	else if (dir == 4) {	//down key
 		animationDirection = 4;
 		animationRows = 0;
-		y += 3;
+		y += 2.5;
 		if (++frameCount > frameDelay)
 		{
 			frameCount = 0;
