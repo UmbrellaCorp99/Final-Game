@@ -15,7 +15,7 @@ objective::~objective() {
 	for (int i = 0; i < 2; i++) {
 		al_destroy_bitmap(images[i]);
 	}
-	al_destroy_bitmap(image);
+	//al_destroy_bitmap(image);
 	al_destroy_sample(pickup);
 }
 

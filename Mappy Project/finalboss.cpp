@@ -48,7 +48,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		if (x < player.getX()) { //right
 			animationDirection = 1;
 			animationRows = 2;
-			x += 1.5;
+			x += 1.25;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -59,7 +59,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		else if (x > player.getX()) { //left
 			animationDirection = 2;
 			animationRows = 1;
-			x -= 1.5;
+			x -= 1.25;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -70,7 +70,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		if (y < player.getY()) { //down
 			animationDirection = 3;
 			animationRows = 0;
-			y += 1.5;
+			y += 1.25;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
@@ -81,7 +81,7 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 		else if (y > player.getY()) { //up
 			animationDirection = 4;
 			animationRows = 3;
-			y -= 1.5;
+			y -= 1.25;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
