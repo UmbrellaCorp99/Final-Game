@@ -127,7 +127,7 @@ int main(void)
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_rest(30);
-	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "You have once again entered the world of survival horror");
+	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 165, ALLEGRO_ALIGN_CENTER, "You have once again entered the world of survvival horror");
 	al_draw_text(font, al_map_rgb(200, 0, 0), WIDTH / 2, 198, ALLEGRO_ALIGN_CENTER, "Good Luck...");
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
