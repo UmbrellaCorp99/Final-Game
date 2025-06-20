@@ -56,8 +56,10 @@ int main(void)
 	ALLEGRO_BITMAP* introBackground = NULL;
 	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_FONT* rankFont = NULL;
+	ALLEGRO_FONT* bulletCountFont = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* instance2 = NULL;
+	ALLEGRO_BITMAP* bulletCountPic = NULL;
 	//program init
 	if(!al_init())										//initialize Allegro
 		return -1;
@@ -92,11 +94,13 @@ int main(void)
 	al_init_primitives_addon();
 
 	font = al_load_font("NeoBulletin Trash.ttf", 24, 0);
+	bulletCountFont = al_load_font("NeoBulletin Trash.ttf", 32, 0);
 	rankFont = al_load_font("NeoBulletin Trash.ttf", 64, 0);
 	died = al_load_bitmap("you died.png");
 	results = al_load_bitmap("results.png");
 	herbPic = al_load_bitmap("G_herb2.png");
 	keyPic = al_load_bitmap("Diamond_Key.png");
+	bulletCountPic = al_load_bitmap("bulletCount.png");
 	introBackground = al_load_bitmap("Resident-Evil-Code-Veronica-X-feature-1038x576.png");
 	Sprite player;
 	Enemy enemy[numEnemies];
@@ -109,6 +113,7 @@ int main(void)
 	finalboss boss;
 
 	player.InitSprites(360,50);
+	player.setBullets(3);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
@@ -162,6 +167,8 @@ int main(void)
 
 	//draw foreground tiles
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
+	al_draw_rotated_bitmap(bulletCountPic, al_get_bitmap_width(bulletCountPic) / 2, al_get_bitmap_height(bulletCountPic) / 2, WIDTH*.05, HEIGHT * .9, 1.57, 0);
+	al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH*.1, HEIGHT*.9, 0,  "x %i", player.getBullets());
 	player.DrawSprites(xOff,yOff);
 	Herb.drawHerb(xOff, yOff);
 	item.drawObjective(xOff, yOff);
@@ -389,6 +396,8 @@ int main(void)
 			//draw foreground tiles
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
 			Herb.drawHerb(xOff, yOff);
+			al_draw_rotated_bitmap(bulletCountPic, al_get_bitmap_width(bulletCountPic) / 2, al_get_bitmap_height(bulletCountPic) / 2, WIDTH * .05, HEIGHT * .9, 1.57, 0);
+			al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH * .1, HEIGHT * .9, 0, "x %i", player.getBullets());
 			item.drawObjective(xOff, yOff);
 			for (int i = 0; i < numEnemies; i++) {
 				enemy[i].DrawSprites(xOff, yOff);
@@ -461,6 +470,7 @@ int main(void)
 	al_destroy_bitmap(herbPic);
 	al_destroy_bitmap(introBackground);
 	al_destroy_bitmap(keyPic);
+	al_destroy_bitmap(bulletCountPic);
 	al_destroy_font(rankFont);
 	al_destroy_sample(sample);
 	al_destroy_sample(sample2);

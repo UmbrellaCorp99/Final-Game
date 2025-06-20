@@ -36,7 +36,11 @@ public:
 	bool getObjective() { return objective; }
 	void incDamage() { damageTaken++; }
 	int getDamageTaken() { return damageTaken; }
+	void setBullets(int i) { bullets = i; }
+	int getBullets() { return bullets;}
+	void loseBullet() { bullets--; }
 private:
+	int bullets;
 	int damageTaken;
 	int stagesCleared;
 	int kills;

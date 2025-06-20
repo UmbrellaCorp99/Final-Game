@@ -42,31 +42,34 @@ void weapon::drawWeapon(int xoffset, int yoffset) {
 void weapon::fireWeapon(Sprite &player) {
 	if (!live)
 	{
-		dir = player.getDir();
-		switch (dir) {
-		case 0:
-			x = player.getX();
-			y = player.getY() + (player.getHeight() / 2);
-			break;
-		case 1:
-			x = player.getX() + player.getWidth();
-			y = player.getY() + (player.getHeight() / 2);
-			break;
-		case 2:
-			x = player.getX() + (player.getWidth() / 2);
-			y = player.getY() + player.getHeight();
-			break;
-		case 3:
-			x = player.getX() + (player.getWidth() / 2);
-			y = player.getY();
-			break;
-		case 4:
-			x = player.getX() + (player.getWidth() / 2);
-			y = player.getY() + player.getHeight();
-			break;
+		if (player.getBullets() > 0) {
+			dir = player.getDir();
+			switch (dir) {
+			case 0:
+				x = player.getX();
+				y = player.getY() + (player.getHeight() / 2);
+				break;
+			case 1:
+				x = player.getX() + player.getWidth();
+				y = player.getY() + (player.getHeight() / 2);
+				break;
+			case 2:
+				x = player.getX() + (player.getWidth() / 2);
+				y = player.getY() + player.getHeight();
+				break;
+			case 3:
+				x = player.getX() + (player.getWidth() / 2);
+				y = player.getY();
+				break;
+			case 4:
+				x = player.getX() + (player.getWidth() / 2);
+				y = player.getY() + player.getHeight();
+				break;
+			}
+			al_play_sample(shot, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+			live = true;
+			player.loseBullet();
 		}
-		al_play_sample(shot, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-		live = true;
 	}
 }
 
