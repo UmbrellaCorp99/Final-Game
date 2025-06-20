@@ -34,7 +34,10 @@ public:
 	void addStageCleared() { stagesCleared++; }
 	void setObjective(bool b) { objective = b; }
 	bool getObjective() { return objective; }
+	void incDamage() { damageTaken++; }
+	int getDamageTaken() { return damageTaken; }
 private:
+	int damageTaken;
 	int stagesCleared;
 	int kills;
 	bool objective;

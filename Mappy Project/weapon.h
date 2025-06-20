@@ -21,6 +21,7 @@ public:
 	void collideWeaponBoss(finalboss &e, Sprite& p);
 	void setLive(bool b) { live = b; }
 	bool getLive() { return live; }
+
 private:
 	float x;
 	float y;

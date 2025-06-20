@@ -118,6 +118,7 @@ void Enemy::CollideSprite(Sprite &p) {
 		{
 			p.removeLife();
 			live = false;
+			p.incDamage();
 			if (p.getLives() != 0) {
 				al_play_sample(injured, .7, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			}

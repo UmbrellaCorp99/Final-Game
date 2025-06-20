@@ -35,6 +35,8 @@ void weapon::drawWeapon(int xoffset, int yoffset) {
 
 		}
 	}
+
+
 }
 
 void weapon::fireWeapon(Sprite &player) {
@@ -74,27 +76,27 @@ void weapon::updateWeapon(int width, int height) {
 		switch (dir) {
 		case 0:
 			x -= speed;
-			if (x < 0 || collided(x, y+boundy/2))
+			if (x < 0 || collided(x, y + boundy / 2))
 				live = false;
 			break;
 		case 1:
 			x += speed;
-			if (x > width || collided(x + boundx, y+boundy/2))
+			if (x > width || collided(x + boundx, y + boundy / 2))
 				live = false;
 			break;
 		case 2:
 			y += speed;
-			if (y > height || collided(x+boundx/2, y))
+			if (y > height || collided(x + boundx / 2, y))
 				live = false;
 			break;
 		case 3:
 			y -= speed;
-			if (y < 0 || collided(x+boundx/2, y))
+			if (y < 0 || collided(x + boundx / 2, y))
 				live = false;
 			break;
 		case 4:
 			y += speed;
-			if (y + boundy > height || collided(x + boundx/2, y + boundy))
+			if (y + boundy > height || collided(x + boundx / 2, y + boundy))
 				live = false;
 			break;
 		}
