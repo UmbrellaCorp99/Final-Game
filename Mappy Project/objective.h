@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef OBJECTIVEH
 #define OBJECTIVEH
 #include <allegro5//allegro.h>

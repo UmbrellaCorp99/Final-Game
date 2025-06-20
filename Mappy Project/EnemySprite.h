@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef ENEMYH
 #define ENEMYH
 #include <allegro5/allegro.h>

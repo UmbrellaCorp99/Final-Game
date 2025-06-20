@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef STATUS2H
 #define STATUS2H
 #include <allegro5/allegro.h>

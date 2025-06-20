@@ -1,5 +1,10 @@
+//Alexander Young
+//Assignment 5
 #include "EnemySprite.h"
 
+//This is the constuctor for the Enemy class, sets up animation variables and allegro samples and a bitmap
+//Takes no parameters
+//No return
 Enemy::Enemy()
 {
 	enemyImage = al_load_bitmap("player3.png");
@@ -17,11 +22,19 @@ Enemy::Enemy()
 	animationDirection = 1;
 	live = false;
 }
+
+//This is the deconstructor for the Enemy class
+//Takes no parameters
+//No return
 Enemy::~Enemy()
 {
 	al_destroy_bitmap(enemyImage);
 	al_destroy_sample(injured);
 }
+
+//This function starts a "new" Enemy a a random x and y value of the map, ensuring no spawning on the player, with different health depending on the level
+//Takes two integers representing the width and height of the map, an integer representing the current level, and a Sprite object reference
+//No return
 void Enemy::InitSprites(int width, int height, int level, Sprite &player)
 {
 	if (!live) {
@@ -45,6 +58,9 @@ void Enemy::InitSprites(int width, int height, int level, Sprite &player)
 	}
 }
 
+//This function updates the x and y locaion of the enemy, as well as the sequence in the animation. Basic movement homing in on player
+//Takes two integers representing the display height and width, and a Sprite object reference
+//No return
 void Enemy::UpdateSprites(int width, int height, Sprite &player)
 {
 	if (live) {
@@ -98,6 +114,9 @@ void Enemy::UpdateSprites(int width, int height, Sprite &player)
 	}
 }
 
+//This function draws the bitmap from the specified region of the sprite sheet used in the constructor according to the current frame
+//Take two integers representing the x and y offsets
+//No return
 void Enemy::DrawSprites(int xoffset, int yoffset)
 {
 	if (live) {
@@ -109,6 +128,9 @@ void Enemy::DrawSprites(int xoffset, int yoffset)
 	
 }
 
+//This function detects if a player collides with an enemy. If so, remove a life from the player, play a sound, and despawn the enemy
+//Takes a Sprite object reference as a parameter
+//No return
 void Enemy::CollideSprite(Sprite &p) {
 	if (live) {
 		if (x > (p.getX() - p.getWidth()) &&

@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -95,6 +97,7 @@ int main(void)
 	al_init_ttf_addon();
 	al_init_primitives_addon();
 
+	//varioys fonts and bitmaps to use throughout
 	font = al_load_font("NeoBulletin Trash.ttf", 24, 0);
 	bulletCountFont = al_load_font("NeoBulletin Trash.ttf", 32, 0);
 	rankFont = al_load_font("NeoBulletin Trash.ttf", 64, 0);
@@ -105,6 +108,8 @@ int main(void)
 	ammoPic = al_load_bitmap("hand-gun-bullets2.png");
 	bulletCountPic = al_load_bitmap("bulletCount.png");
 	introBackground = al_load_bitmap("Resident-Evil-Code-Veronica-X-feature-1038x576.png");
+
+	//instantiating objects
 	Sprite player;
 	Enemy enemy[numEnemies];
 	weapon bullet[numBullets];
@@ -116,6 +121,7 @@ int main(void)
 	objective item;
 	finalboss boss;
 
+	//Setting up first map
 	player.InitSprites(360,50);
 	player.setBullets(25);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
@@ -127,9 +133,11 @@ int main(void)
 	
 	int xOff = 0;
 	int yOff = 0;
+	//load first map
 	if(MapLoad("FinalProjectMap1.FMP", 1))
 		return -5;
 
+	//This is the intro. It plays background music and displays varioys text and images to tell user how to play and give info on the game
 	intro = al_load_sample("music/intro.wav");
 	al_play_sample(intro, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	al_draw_tinted_bitmap(introBackground, al_map_rgb(64, 64, 64), 0, 0, 0);
@@ -164,6 +172,7 @@ int main(void)
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_rest(10);
+	//End of introduction
 
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / 60);
@@ -172,14 +181,18 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	al_start_timer(timer);
+	//play the background music on a loop
 	al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 	//draw the background tiles
 	MapDrawBG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1);
 
 	//draw foreground tiles
 	MapDrawFG(xOff,yOff, 0, 0, WIDTH-1, HEIGHT-1, 0);
+	
+	//draw the bullet indicator with the current ammount for the player's HUD
 	al_draw_rotated_bitmap(bulletCountPic, al_get_bitmap_width(bulletCountPic) / 2, al_get_bitmap_height(bulletCountPic) / 2, WIDTH*.05, HEIGHT * .9, 1.57, 0);
 	al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH*.1, HEIGHT*.9, 0,  "x %i", player.getBullets());
+	//draw things to the display for the first time
 	player.DrawSprites(xOff,yOff);
 	Herb.drawHerb(xOff, yOff);
 	Ammo.drawAmmo(xOff, yOff);
@@ -203,62 +216,67 @@ int main(void)
 				player.UpdateSprites(WIDTH,HEIGHT,1);
 			else
 				player.UpdateSprites(WIDTH,HEIGHT,2);
+			//Only runs if the player it touching an endblock and they have gotten the objective
 			if (player.CollisionEndBlock() && player.getObjective())
 				if (count == 0) {
-					player.addStageCleared();
-					player.resetLives();
-					player.setBullets(player.getBullets() + 25);
-					player.setObjective(false);
-					Herb.setLive(false);
-					Ammo.setLive(false);
-					item.incrementStage();
-					al_stop_samples();
-					door = al_load_sample("music/doorOpen.wav");
-					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-					if (MapLoad("FinalProjectMap2.FMP", 1))
+					player.addStageCleared();	//increment stagesCleared player variable
+					player.resetLives();	//give player full health
+					player.setBullets(player.getBullets() + 25);	//give player 25 bullets
+					player.setObjective(false);	//reset player objective variable
+					Herb.setLive(false);	//clear the herb from map
+					Ammo.setLive(false);	//clear the ammo from map
+					item.incrementStage();	//change the image displayed for the objective
+					al_stop_samples();	//stop the background music
+					door = al_load_sample("music/doorOpen.wav");	
+					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);	//play door open sound effect
+					if (MapLoad("FinalProjectMap2.FMP", 1))	//load next map
 						return -5;
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					//set up new herb, ammo, objective placements
 					Herb.startHerb(600, 600);
 					Ammo.startAmmo(700, 1150);
 					Herb.drawHerb(xOff, yOff);
 					Ammo.drawAmmo(xOff, yOff);
+					//reset any live enemies and reset all currently live bullets
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);
 					}
-					item.startObjective(450, 700);
+					item.startObjective(450, 700);	//place the new objective on the map
 					item.drawObjective(xOff, yOff);
+					//place the player in the specified location in the new map
 					player.setX(WIDTH*.75);
 					player.setY((mapheight*32) - (player.getHeight()*2));
 					player.DrawSprites(xOff, yOff);
 					door = al_load_sample("music/doorClose.wav");
-					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);	//play door closing sound effecet
 					sample = al_load_sample("music/07 - The Palace Of Insane.wav");
-					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+					al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	//play new background music on a loop
 					al_flip_display();
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					count++;
 				}
 				else if (count == 1) {
-					player.addStageCleared();
-					player.resetLives(); 
-					Herb.setLive(false);
-					Ammo.setLive(false);
-					player.setBullets(player.getBullets() + 30);
-					al_stop_samples();
-					door = al_load_sample("music/doorOpen.wav");
+					player.addStageCleared(); //increment stagesCleared player stat
+					player.resetLives();	//give player full health
+					Herb.setLive(false);	//clear herb from map
+					Ammo.setLive(false);	//clear ammo from map
+					player.setBullets(player.getBullets() + 30);	//give player 30 bullets
+					al_stop_samples();	//stop background music
+					door = al_load_sample("music/doorOpen.wav");	//play door opening sound effect
 					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-					if (MapLoad("FinalProjectMap3.FMP", 1))
+					if (MapLoad("FinalProjectMap3.FMP", 1))	//load next map
 						return -5;
+					//start new bacground music. This sample is being used to create a sample instance that is attatched to the mixer so the music can switch mid-program on its own
 					if (!track1Started) {
 						sample = al_load_sample("music/Nosferatu first.wav");
 						instance1 = al_create_sample_instance(sample);
 						al_attach_sample_instance_to_mixer(instance1, al_get_default_mixer());
 						al_set_sample_instance_playmode(instance1, ALLEGRO_PLAYMODE_ONCE);
-						door = al_load_sample("music/doorClose.wav");
+						door = al_load_sample("music/doorClose.wav");	//play door closing sound effect
 						al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 						al_play_sample_instance(instance1);
 
@@ -266,12 +284,14 @@ int main(void)
 					}
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
+					//clear enemies and live bullets
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
 					for (int i = 0; i < numBullets; i++) {
 						bullet[i].setLive(false);
 					}
+					//spawn the player at the specified location in the new map
 					player.setX((mapwidth*32)/2);
 					player.setY((mapheight * 32)/2);
 					player.DrawSprites(xOff, yOff);
@@ -279,29 +299,36 @@ int main(void)
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					count++;
 				}
-
+			//The following only happens for the first two maps since the last map should only contain the final boss
 			if (count == 0 || count == 1) {
+				//spawn new enemies
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].InitSprites(mapwidth * 32, mapheight * 32, count, player);
 				}
+				//update enemy locations
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].UpdateSprites(WIDTH, HEIGHT, player);
 				}
-				
+				//update weapon location
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 				}
+				//check for weapon collision
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].collideWeapon(enemy, numEnemies, player);
 				}
+				//check for enemy collision with player
 				for (int i = 0; i < numEnemies; i++) {
 					enemy[i].CollideSprite(player);
 				}
+				//check if player collides with herb, ammo, or the objective
 				Herb.collideHerb(player);
 				Ammo.collideAmmo(player);
 				item.collideObjective(player);
 			}
+			//The following only happens for the third map
 			else if (count == 2) {
+				//checks to see if the first sample instance in the mixer is finished and the second track has not started. If so, play the second sample instance on a loop for the remainder of the map
 				if (track1Started && !track2Started && !al_get_sample_instance_playing(instance1)) {
 					sample2 = al_load_sample("music/nosferatu loop.wav");
 					instance2 = al_create_sample_instance(sample2);
@@ -310,24 +337,30 @@ int main(void)
 					al_play_sample_instance(instance2);
 					track2Started = true;
 				}
+				//spawn boss, update boss location
 				boss.initBoss((mapwidth * 32) / 3, (mapheight * 32) / 3);
 				boss.updateBoss(WIDTH, HEIGHT, player);
+				//update weapon location
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].updateWeapon(mapwidth * 32, mapheight * 32);
 				}
+				//check for bullet collision with final boss
 				for (int i = 0; i < numBullets; i++) {
 					bullet[i].collideWeaponBoss(boss, player);
 				}
+				//check if boss touches player
 				boss.collideBoss(player);
-				Herb.collideHerb(player);
+				//if boss dies, increment player stagesCleared stat
 				if (!boss.getlive()) {
 					player.addStageCleared();
+					//Stop whichever sample instance is playing currently
 					if (track2Started) {
 						al_stop_sample_instance(instance2);
 					}
 					else {
 						al_stop_sample_instance(instance1);
 					}
+					//set win to true
 					win = true;
 				}
 			}
@@ -359,6 +392,7 @@ int main(void)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				keys[SPACE] = true;
+				//if space is pressed, fire a bullet that is not live
 				for (int i = 0; i < numBullets; i++) {
 					if (!bullet[i].getLive()) {
 						bullet[i].fireWeapon(player);
@@ -416,18 +450,25 @@ int main(void)
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
 			Herb.drawHerb(xOff, yOff);
 			Ammo.drawAmmo(xOff, yOff);
+			//draw the bullet indicator with the current ammount for the player's HUD
 			al_draw_rotated_bitmap(bulletCountPic, al_get_bitmap_width(bulletCountPic) / 2, al_get_bitmap_height(bulletCountPic) / 2, WIDTH * .05, HEIGHT * .9, 1.57, 0);
 			al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH * .1, HEIGHT * .9, 0, "x %i", player.getBullets());
+			//draw the objective
 			item.drawObjective(xOff, yOff);
+			//draw the enemies
 			for (int i = 0; i < numEnemies; i++) {
 				enemy[i].DrawSprites(xOff, yOff);
 			}
+			//draw the player
 			player.DrawSprites(xOff, yOff);
+			//draw the weapons
 			for (int i = 0; i < numBullets; i++) {
 				bullet[i].drawWeapon(xOff, yOff);
 
 			}
+			//draw the boss
 			boss.drawBoss(xOff, yOff);
+			//The following draws a different status bar depending on the value of the player's getLives
 			if (player.getLives() > 4) {
 				fine.updateStatus();
 				fine.drawStatus(xOff, yOff);
@@ -442,6 +483,7 @@ int main(void)
 			}
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
+			//If the player dies, draw the corresponding bitmap to the screen, along with text with results and play a special audio. End the game after 10 seconds
 			if (player.getLives() <= 0) {
 				al_draw_bitmap(died, WIDTH / 5, 0, 0);
 				al_draw_textf(font, al_map_rgb(200, 0, 0), WIDTH/2, HEIGHT*.8, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
@@ -452,17 +494,21 @@ int main(void)
 				al_rest(10);
 				done = true;
 			}
+			//If the player kills the final boss, playa special audio and wait 6 seconds
 			else if (win == true) {
 				sample = al_load_sample("music/bossDefeat.wav");
 				al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_rest(6);
+				//calculate a score (rank) for the player based on the levels cleared, kills, and damage taken
 				score = ((player.getStagesCleared() * 1000) + (player.getKills() * 100) - (player.getDamageTaken() * 50));
+				//play background music, draw a scaled bitmap for the background, and draw text for the stats
 				resultScreen = al_load_sample("music/2-37 - Set Free (Ranking BGM1).wav");
 				al_play_sample(resultScreen, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_draw_scaled_bitmap(results, 0, 0, 1080, 607, 0, 0, WIDTH, HEIGHT, 0);
 				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT*.1, ALLEGRO_ALIGN_RIGHT, "Enemies killed: %i", player.getKills());
 				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .2, ALLEGRO_ALIGN_RIGHT, "Damage Taken: %i", player.getDamageTaken());
 				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .3, ALLEGRO_ALIGN_RIGHT, "Stages Cleared: %i", player.getStagesCleared());
+				//draw the rank dependant on the value of the score obtained
 				if (score > 5600) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: S");
 				}
@@ -480,12 +526,14 @@ int main(void)
 				}
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
+				//pause for 48 seconds (for music to finish, allows player to review stats). End game
 				al_rest(48);
 				done = true;
 			}
 		}
 	}
 	MapFreeMem();
+	//destoy allegro objects to clear up memory
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
 	al_destroy_bitmap(herbPic);

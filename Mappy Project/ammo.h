@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef AMMOH
 #define AMMOH
 #include <allegro5//allegro.h>

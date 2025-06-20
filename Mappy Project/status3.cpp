@@ -1,12 +1,20 @@
+//Alexander Young
+//Assignment 5
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include <stdio.h>
 #include "status3.h"
 
+//This function draws a scaled bitmap to the display with the x and y offsets taken into account
+//Takes two integers representing the x and y offsets
+//No return
 void status3::drawStatus(int xOffset, int yOffset) {
 	al_draw_scaled_bitmap(image[curframe], 0, 0, 320, 158, x, y, 160, 79, 0);
 }
 
+//This function updates the frame drawn in the gif sequence
+//Takes no parameters
+//No return
 void status3::updateStatus() {
 	if (framecount++ > framedelay)
 	{
@@ -17,6 +25,9 @@ void status3::updateStatus() {
 	}
 }
 
+//This function loads in a set of files that form a gif
+//Takes and integer that represents the number of files that make up the gif and two integers representing the display width and height
+//No return
 void status3::load_animated_status(int size, int WIDTH, int HEIGHT) {
 	char s[80];
 	maxframe = size;
@@ -36,6 +47,9 @@ void status3::load_animated_status(int size, int WIDTH, int HEIGHT) {
 	framecount = 0;
 }
 
+//This is a deconstructor for the status3 class
+//takes no parameters
+//No return
 status3::~status3() {
 	for (int i = 0; i < maxframe; i++)
 		al_destroy_bitmap(image[i]);

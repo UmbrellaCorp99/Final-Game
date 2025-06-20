@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef HERBH
 #define HERBH
 #include <allegro5//allegro.h>

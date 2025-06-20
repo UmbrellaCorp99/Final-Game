@@ -1,5 +1,10 @@
+//Alexander Young
+//Assignment 5
 #include "finalboss.h"
 
+//This is the constuctor for the finalboss class, sets up animation variables and allegro samples and a bitmap
+//Takes no parameters
+//No return
 finalboss::finalboss() {
 	image = al_load_bitmap("player2.png");
 	injured = al_load_sample("music/05 PC-Voice (S.E. Collection).wav");
@@ -17,11 +22,17 @@ finalboss::finalboss() {
 	live = false;
 }
 
+//This is the deconstructor for the finalboss class
+//Takes no parameters
+//No return
 finalboss::~finalboss() {
 	//al_destroy_bitmap(bossimage);
 	//al_destroy_sample(bossinjured);
 }
 
+//This function starts a "new" finalboss at a specified x and y value of the map
+//Takes two integers representing the width and height of the map
+//No return
 void finalboss::initBoss(int width, int height) {
 	if (!live) {
 		x = width;
@@ -31,6 +42,9 @@ void finalboss::initBoss(int width, int height) {
 	}
 }
 
+//This function draws the bitmap from the specified region of the sprite sheet used in the constructor according to the current frame
+//Take two integers representing the x and y offsets
+//No return
 void finalboss::drawBoss(int xOff, int yOff) {
 	if (live) {
 		int fx = (curFrame % animationColumns) * frameWidth;
@@ -40,6 +54,9 @@ void finalboss::drawBoss(int xOff, int yOff) {
 	}
 }
 
+//This function updates the x and y locaion of the finalboss, as well as the sequence in the animation
+//Takes two integers representing the display height and width, and a Sprite object reference
+//No return
 void finalboss::updateBoss(int width, int height, Sprite& player) {
 	if (live) {
 		int oldx = x;
@@ -92,6 +109,9 @@ void finalboss::updateBoss(int width, int height, Sprite& player) {
 	}
 }
 
+//This function detects if a player collides with an enemy.If so, play a sound
+//Takes a Sprite object reference as a parameter
+//No return
 void finalboss::collideBoss(Sprite& p) {
 	if (live) {
 		if (x > (p.getX() - p.getWidth()) &&

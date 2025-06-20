@@ -1,16 +1,29 @@
+//Alexander Young
+//Assignment 5
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include "SpriteSheet.h"
 
+//This is the constuctor for the SpriteSheet class
+//Takes no parameters
+//No return
 Sprite::Sprite()
 {
 	image=NULL;
 	lives = 6;
 }
+
+//This is the deconstructor for the SpriteSheet class
+//Takes no parameters
+//No return
 Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
 }
+
+//This function starts a Sprite a a specified x and y value of the map
+//Takes two integers representing the width and height of the map, an integer representing the current level
+//No return
 void Sprite::InitSprites(int xstart, int ystart)
 {
 	x = xstart;
@@ -34,6 +47,9 @@ void Sprite::InitSprites(int xstart, int ystart)
 	al_convert_mask_to_alpha(image, al_map_rgb(255,0,255));
 }
 
+//This function updates the x and y locaion of the Sprite, as well as the sequence in the animation
+//Takes two integers representing the display height and width and an integer representing the direction
+//No return
 void Sprite::UpdateSprites(int width, int height, int dir)
 {
 	int oldx = x;
@@ -116,6 +132,9 @@ void Sprite::UpdateSprites(int width, int height, int dir)
 	}
 }
 
+//This function determines if a sprite collides with an endblock
+//Takes no parameters
+//Returns a boolean
 bool Sprite::CollisionEndBlock()
 {
 	if (endValue(x + frameWidth/2, y-5))
@@ -124,6 +143,9 @@ bool Sprite::CollisionEndBlock()
 		return false;
 }
 
+//This function draws the bitmap from the specified region of the sprite sheet used in the InitSprite function according to the current frame
+//Take two integers representing the x and y offsets
+//No return
 void Sprite::DrawSprites(int xoffset, int yoffset)
 {
 	int fx = (curFrame % animationColumns) * frameWidth;

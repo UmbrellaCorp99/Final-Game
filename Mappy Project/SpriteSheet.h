@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef SPRITEH
 #define SPRITEH
 

@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef STATUSH
 #define STATUSH
 #include <allegro5/allegro.h>

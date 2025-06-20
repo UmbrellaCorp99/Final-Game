@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef WEAPONH
 #define WEAPONH
 #include <allegro5/allegro.h>

@@ -1,3 +1,5 @@
+//Alexander Young
+//Assignment 5
 #ifndef FINALBOSSH
 #define FINALBOSSH
 #include <allegro5/allegro.h>

@@ -1,5 +1,10 @@
+//Alexander Young
+//Assignment 5
 #include "weapon.h"
 
+//This is a constructor for the weapon class
+//Takes no parameters
+//No return
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
 	shot = al_load_sample("music/02 Arms (S.E. Collection).wav");
@@ -10,12 +15,18 @@ weapon::weapon() {
 	boundy = al_get_bitmap_height(image);
 }
 
+//This is a deconstructor for the weapon class
+//Takes no parameters
+//No return
 weapon::~weapon() {
 	al_destroy_bitmap(image);
 	al_destroy_sample(shot);
 	al_destroy_sample(empty);
 }
 
+//This function draws a rotated bitmap to the display with the x and y offsets taken into account, rotation is based on the dir, retrieved from fireWeapon
+//Takes two integers representing the x and y offsets
+//No return
 void weapon::drawWeapon(int xoffset, int yoffset) {
 	if (live) {
 		switch (dir) {
@@ -41,6 +52,9 @@ void weapon::drawWeapon(int xoffset, int yoffset) {
 
 }
 
+//This function sets a weapon object that isn't live to live and sets the x and y based on the user direction and plays a sound. Sound played dependand on player's getBullets return value
+//Takes a Sprite object reference as a parameter
+//No return
 void weapon::fireWeapon(Sprite &player) {
 	if (!live)
 	{
@@ -78,6 +92,9 @@ void weapon::fireWeapon(Sprite &player) {
 	}
 }
 
+//This function updates a live weapon's x and y position on the map. If it collides with a foreground tile, set live to false
+//Takes two integers representing the map width and height as parameters
+//No return
 void weapon::updateWeapon(int width, int height) {
 	if (live)
 	{
@@ -111,6 +128,9 @@ void weapon::updateWeapon(int width, int height) {
 	}
 }
 
+//This function determines if a weapon collides with an Enemy. If so, remove an enemy life, set the weapon live value to false. If enemy life is 0, set enemy live to false as well and increment the player kills
+//Takes an Enemy object reference, an integer representing how many Enemies there are, and a Sprite object reference as parameters
+//No return
 void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 	if (live) {
 		for (int i = 0; i < csize; i++) {
@@ -138,6 +158,9 @@ void weapon::collideWeapon(Enemy e[], int csize, Sprite &p) {
 	}
 }
 
+//This function determines if a weapon collides with an finalboss. If so, remove a life from finalboss, set the weapon live value to false. If finalboss life is 0, set enemy live to false as well and increment the player kills
+//Takes an finalboss object reference and a Sprite object reference as parameters
+//No return
 void weapon::collideWeaponBoss(finalboss &e, Sprite& p) {
 	if (live) {
 		if ((((x > e.getX()) && x < (e.getX() + e.getWidth()) ||
