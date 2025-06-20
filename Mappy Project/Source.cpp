@@ -220,7 +220,7 @@ int main(void)
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
 					Herb.startHerb(600, 600);
-					Ammo.startAmmo(750, 1100);
+					Ammo.startAmmo(700, 1150);
 					Herb.drawHerb(xOff, yOff);
 					Ammo.drawAmmo(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
@@ -246,6 +246,7 @@ int main(void)
 					player.addStageCleared();
 					player.resetLives(); 
 					Herb.setLive(false);
+					Ammo.setLive(false);
 					player.setBullets(player.getBullets() + 30);
 					al_stop_samples();
 					door = al_load_sample("music/doorOpen.wav");
@@ -458,9 +459,10 @@ int main(void)
 				score = ((player.getStagesCleared() * 1000) + (player.getKills() * 100) - (player.getDamageTaken() * 50));
 				resultScreen = al_load_sample("music/2-37 - Set Free (Ranking BGM1).wav");
 				al_play_sample(resultScreen, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-				al_draw_scaled_bitmap(results, 0, 0, 1080, 607, 0, 0, WIDTH, HEIGHT, 0);
-				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT*.1, 0, "Enemies killed: %i", player.getKills());
-				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .2, 0, "Stages Cleared: %i", player.getStagesCleared());
+				al_draw_tinted_bitmap(results, al_map_rgb(128,128,128), WIDTH, HEIGHT, 0);
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT*.1, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .2, ALLEGRO_ALIGN_CENTER, "Damage Taken: %i", player.getDamageTaken());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .3, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
 				if (score > 5600) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: S");
 				}
