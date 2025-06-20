@@ -42,7 +42,7 @@ private:
 	int animationRows;
 	int animationDirection;
 	ALLEGRO_SAMPLE* injured;
-	ALLEGRO_BITMAP* image;
+	ALLEGRO_BITMAP* enemyImage;
 };
 #endif
 

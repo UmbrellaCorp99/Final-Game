@@ -12,7 +12,7 @@ finalboss::finalboss() {
 	frameWidth = 32;
 	frameHeight = 32;
 	animationColumns = 3;
-	animationRows = 3;
+	animationRows = 4;
 	animationDirection = 1;
 	live = false;
 }

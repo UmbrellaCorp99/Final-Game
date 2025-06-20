@@ -2,24 +2,24 @@
 
 Enemy::Enemy()
 {
-	image = al_load_bitmap("player.png");
+	enemyImage = al_load_bitmap("player3.png");
 	injured = al_load_sample("music/05 PC-Voice (S.E. Collection).wav");
-	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
+	al_convert_mask_to_alpha(enemyImage, al_map_rgb(255, 0, 255));
 
 	maxFrame = 3;
-	curFrame = 48;
+	curFrame = 0;
 	frameCount = 0;
 	frameDelay = 6;
 	frameWidth = 32;
 	frameHeight = 32;
 	animationColumns = 3;
-	animationRows = 8;
+	animationRows = 4;
 	animationDirection = 1;
 	live = false;
 }
 Enemy::~Enemy()
 {
-	al_destroy_bitmap(image);
+	al_destroy_bitmap(enemyImage);
 	al_destroy_sample(injured);
 }
 void Enemy::InitSprites(int width, int height, int level, Sprite &player)
@@ -53,46 +53,46 @@ void Enemy::UpdateSprites(int width, int height, Sprite &player)
 
 		if (x < player.getX()) { //right
 			animationDirection = 1;
-			animationRows = 6;
+			animationRows = 2;
 			x += .65;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
-				if (++curFrame > 74)
-					curFrame = 72;
+				if (++curFrame > 8)
+					curFrame = 6;
 			}
 		}
 		else if (x > player.getX()) { //left
 			animationDirection = 2;
-			animationRows = 5;
+			animationRows = 1;
 			x -= .65;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
-				if (++curFrame > 62)
-					curFrame = 60;
+				if (++curFrame > 5)
+					curFrame = 3;
 			}
 		}
 		if (y < player.getY()) { //down
 			animationDirection = 3;
-			animationRows = 4;
+			animationRows = 0;
 			y += .65;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
-				if (++curFrame > 50)
-					curFrame = 48;
+				if (++curFrame > 2)
+					curFrame = 0;
 			}
 		}
 		else if (y > player.getY()) { //up
 			animationDirection = 4;
-			animationRows = 7;
+			animationRows = 3;
 			y -= .65;
 			if (++frameCount > frameDelay)
 			{
 				frameCount = 0;
-				if (++curFrame > 74)
-					curFrame = 72;
+				if (++curFrame > 11)
+					curFrame = 9;
 			}
 		}
 	}
@@ -104,7 +104,7 @@ void Enemy::DrawSprites(int xoffset, int yoffset)
 		int fx = (curFrame % animationColumns) * frameWidth;
 		int fy = animationRows * frameHeight;
 
-		al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+		al_draw_bitmap_region(enemyImage, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 	}
 	
 }
