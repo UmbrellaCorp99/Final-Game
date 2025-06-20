@@ -460,23 +460,23 @@ int main(void)
 				resultScreen = al_load_sample("music/2-37 - Set Free (Ranking BGM1).wav");
 				al_play_sample(resultScreen, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_draw_scaled_bitmap(results, 0, 0, 1080, 607, 0, 0, WIDTH, HEIGHT, 0);
-				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT*.1, ALLEGRO_ALIGN_CENTER, "Enemies killed: %i", player.getKills());
-				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .2, ALLEGRO_ALIGN_CENTER, "Damage Taken: %i", player.getDamageTaken());
-				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .3, ALLEGRO_ALIGN_CENTER, "Stages Cleared: %i", player.getStagesCleared());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT*.1, ALLEGRO_ALIGN_RIGHT, "Enemies killed: %i", player.getKills());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .2, ALLEGRO_ALIGN_RIGHT, "Damage Taken: %i", player.getDamageTaken());
+				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .3, ALLEGRO_ALIGN_RIGHT, "Stages Cleared: %i", player.getStagesCleared());
 				if (score > 5600) {
-					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: S");
+					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: S");
 				}
 				else if (score > 5100) {
-					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: A");
+					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: A");
 				}
 				else if (score > 4600) {
-					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: B");
+					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: B");
 				}
 				else if (score > 4100) {
-					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: C");
+					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: C");
 				}
 				else {
-					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: D");
+					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH, HEIGHT * .6, ALLEGRO_ALIGN_RIGHT, "Rank: D");
 				}
 				al_flip_display();
 				al_clear_to_color(al_map_rgb(0, 0, 0));
