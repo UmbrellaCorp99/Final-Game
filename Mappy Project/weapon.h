@@ -32,6 +32,7 @@ private:
 	int dir;
 	ALLEGRO_BITMAP* image;
 	ALLEGRO_SAMPLE* shot;
+	ALLEGRO_SAMPLE* empty;
 };
 #endif
 

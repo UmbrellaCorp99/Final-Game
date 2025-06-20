@@ -14,6 +14,7 @@
 #include "status2.h"
 #include "status3.h"
 #include "herb.h"
+#include "ammo.h"
 #include "finalboss.h"
 #include <iostream>
 #include "objective.h"
@@ -79,7 +80,7 @@ int main(void)
 		al_show_native_message_box(NULL, "Error", "Acodec failed to initialize", 0, 0, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	if (!al_reserve_samples(14)) {
+	if (!al_reserve_samples(20)) {
 		exit(9);
 	}
 	sample = al_load_sample("music/06 - Death Siege.wav");
@@ -109,15 +110,17 @@ int main(void)
 	status2 caution;
 	status3 danger;
 	herb Herb;
+	ammo Ammo;
 	objective item;
 	finalboss boss;
 
 	player.InitSprites(360,50);
-	player.setBullets(3);
+	player.setBullets(25);
 	fine.load_animated_status(54, WIDTH, HEIGHT);
 	caution.load_animated_status(54, WIDTH, HEIGHT);
 	danger.load_animated_status(54, WIDTH, HEIGHT);
 	Herb.startHerb(350, 600);
+	Ammo.startAmmo(730, 550);
 	item.startObjective(250, 800);
 	
 	int xOff = 0;
@@ -171,6 +174,7 @@ int main(void)
 	al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH*.1, HEIGHT*.9, 0,  "x %i", player.getBullets());
 	player.DrawSprites(xOff,yOff);
 	Herb.drawHerb(xOff, yOff);
+	Ammo.drawAmmo(xOff, yOff);
 	item.drawObjective(xOff, yOff);
 	al_flip_display();
 	al_clear_to_color(al_map_rgb(0,0,0));
@@ -195,8 +199,10 @@ int main(void)
 				if (count == 0) {
 					player.addStageCleared();
 					player.resetLives();
+					player.setBullets(player.getBullets() + 25);
 					player.setObjective(false);
 					Herb.setLive(false);
+					Ammo.setLive(false);
 					item.incrementStage();
 					al_stop_samples();
 					door = al_load_sample("music/doorOpen.wav");
@@ -206,7 +212,9 @@ int main(void)
 					MapDrawBG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1);
 					MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
 					Herb.startHerb(600, 600);
+					Ammo.startAmmo(900, 1300);
 					Herb.drawHerb(xOff, yOff);
+					Ammo.drawAmmo(xOff, yOff);
 					for (int i = 0; i < numEnemies; i++) {
 						enemy[i].setLive(false);
 					}
@@ -230,6 +238,7 @@ int main(void)
 					player.addStageCleared();
 					player.resetLives(); 
 					Herb.setLive(false);
+					player.setBullets(player.getBullets() + 30);
 					al_stop_samples();
 					door = al_load_sample("music/doorOpen.wav");
 					al_play_sample(door, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -280,6 +289,7 @@ int main(void)
 					enemy[i].CollideSprite(player);
 				}
 				Herb.collideHerb(player);
+				Ammo.collideAmmo(player);
 				item.collideObjective(player);
 			}
 			else if (count == 2) {
@@ -396,6 +406,7 @@ int main(void)
 			//draw foreground tiles
 			MapDrawFG(xOff,yOff, 0, 0, WIDTH, HEIGHT, 0);
 			Herb.drawHerb(xOff, yOff);
+			Ammo.drawAmmo(xOff, yOff);
 			al_draw_rotated_bitmap(bulletCountPic, al_get_bitmap_width(bulletCountPic) / 2, al_get_bitmap_height(bulletCountPic) / 2, WIDTH * .05, HEIGHT * .9, 1.57, 0);
 			al_draw_textf(font, al_map_rgb(255, 255, 0), WIDTH * .1, HEIGHT * .9, 0, "x %i", player.getBullets());
 			item.drawObjective(xOff, yOff);
@@ -436,22 +447,22 @@ int main(void)
 				sample = al_load_sample("music/bossDefeat.wav");
 				al_play_sample(sample, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_rest(6);
-				score = ((player.getStagesCleared() * 1000) + (player.getKills() * 100) - (player.getDamageTaken() * 100));
+				score = ((player.getStagesCleared() * 1000) + (player.getKills() * 100) - (player.getDamageTaken() * 50));
 				resultScreen = al_load_sample("music/2-37 - Set Free (Ranking BGM1).wav");
 				al_play_sample(resultScreen, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				al_draw_scaled_bitmap(results, 0, 0, 1080, 607, 0, 0, WIDTH, HEIGHT, 0);
 				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT*.1, 0, "Enemies killed: %i", player.getKills());
 				al_draw_textf(font, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .2, 0, "Stages Cleared: %i", player.getStagesCleared());
-				if (score > 8000) {
+				if (score > 5600) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH/2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: S");
 				}
-				else if (score > 7000) {
+				else if (score > 5100) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: A");
 				}
-				else if (score > 6000) {
+				else if (score > 4600) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: B");
 				}
-				else if (score > 5000) {
+				else if (score > 4100) {
 					al_draw_text(rankFont, al_map_rgb(255, 0, 0), WIDTH / 2, HEIGHT * .6, ALLEGRO_ALIGN_CENTER, "Rank: C");
 				}
 				else {

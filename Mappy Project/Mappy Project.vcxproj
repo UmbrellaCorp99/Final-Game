@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ammo.cpp" />
     <ClCompile Include="EnemySprite.cpp" />
     <ClCompile Include="finalboss.cpp" />
     <ClCompile Include="herb.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ammo.h" />
     <ClInclude Include="EnemySprite.h" />
     <ClInclude Include="finalboss.h" />
     <ClInclude Include="herb.h" />

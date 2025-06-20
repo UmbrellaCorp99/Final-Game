@@ -3,6 +3,7 @@
 weapon::weapon() {
 	image = al_load_bitmap("bullet.png");
 	shot = al_load_sample("music/02 Arms (S.E. Collection).wav");
+	empty = al_load_sample("music/emptyMag.wav");
 	live = false;
 	speed = 15;
 	boundx = al_get_bitmap_width(image);
@@ -12,6 +13,7 @@ weapon::weapon() {
 weapon::~weapon() {
 	al_destroy_bitmap(image);
 	al_destroy_sample(shot);
+	al_destroy_sample(empty);
 }
 
 void weapon::drawWeapon(int xoffset, int yoffset) {
@@ -69,6 +71,9 @@ void weapon::fireWeapon(Sprite &player) {
 			al_play_sample(shot, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			live = true;
 			player.loseBullet();
+		}
+		else {
+			al_play_sample(empty, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		}
 	}
 }
